@@ -1,23 +1,24 @@
 const express = require("express");
 const path = require("path");
+const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
-const router = express.Router();
-const port = process.env.PORT || 6000;
+const port = process.env.PORT || 5000;
 const chatbot = require("./server.chatbot");
+
+app.use(cors()); // Allow requests from different origins
 
 app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(router);
+
+app.post("/chatbot", chatbot.chatbot);
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
-//router.post("/chatbot", chatbot.chatbot);
-
 app.listen(port, () => {
-  console.log(`Server is running on port http://localhost:${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });

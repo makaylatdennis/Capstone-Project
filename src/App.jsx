@@ -1,8 +1,10 @@
 import React from "react";
 import "./App.css";
-
+import Chatbot from "./components/Chatbot";
 function App() {
-  return <></>;
+  return <>
+    <Chatbot />
+  </>;
 }
 
 export default App;
