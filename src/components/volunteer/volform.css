@@ -1,0 +1,54 @@
+.vol-form {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.vol-header{
+    text-align: center;
+}
+
+.vol-header h1, h3{
+    margin-bottom: 1rem;
+}
+
+.vol-input{
+    width: 29.7rem;
+    height: 2rem;
+    margin-bottom: 3rem;
+}
+
+.vol-input2{
+    width: 19.6rem;
+    height: 2rem;
+    margin-bottom: 3rem;
+}
+
+
+.input-box label {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.5rem; 
+}
+
+.form-row {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+
+
+.error {
+    color: red;
+    font-size: 0.9em;
+}
+
+#street-input{
+    display: flex;
+    width: 60rem;
+    margin-bottom: 3rem;
+    height: 2rem;
+}
