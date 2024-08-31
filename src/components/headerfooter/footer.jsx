@@ -10,7 +10,7 @@ function Footer() {
             <div className="container">
                 <div className="row">
                     <div className="footer-col" id="footer1">
-                        <div id="footer-logo">Logo</div>
+                        <div id="footer-logo"><img src='logo.png'/></div>
                         <input id="newsletter-input" name="newsletter" type="text" placeholder="example@mail.com" />
                         <button id="submit-bttn" onClick={() => console.log('Submit')}>Submit</button>
                         <h3>Connect With Us!</h3>
@@ -30,16 +30,27 @@ function Footer() {
       </div>
                     </div>
 
+
+                    <div className="footer-col" id="footer2">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><p>Home </p></li>
+                            <li><p>Volunteer</p></li>
+                            <li><p>Request Services</p></li>
+                            <li><p>Partners</p></li>
+                            <li><p>Sign In</p></li>
+                        </ul>
+                    </div>
+
                     <div className="footer-col" id="footer2">
                         <h4>Customer Service</h4>
                         <ul>
                             <li><p>Contact Us</p></li>
                             <li><p>FAQ</p></li>
-                            <li><p>Return Policy</p></li>
                             <li><p>Partners</p></li>
-                            <li><p>Join #CurlEssentialsFam</p></li>
                         </ul>
                     </div>
+
 
                     <div className="footer-col" id="footer3">
                         <h4>Legal</h4>
@@ -58,6 +69,11 @@ function Footer() {
                         </ul>
                     </div>
                 </div>
+                <div class="footer-bottom">
+    <p>© 2024 Green Beginnings. All rights reserved.</p>
+  </div>
+
+
             </div>
         </footer>
     );
