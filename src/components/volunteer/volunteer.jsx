@@ -4,6 +4,8 @@ import './volunteer.css';
 function Volunteer(){
     return (
         <section className="volunteer-section">
+
+
             <div className="volunteer-container">
                 <div className="volunteer-content">
                     <h3>Cultivate Community, One Garden at a Time!</h3>
@@ -33,8 +35,12 @@ function Volunteer(){
                 For the past three years, Emily Johnson and Mark Davis have been dedicated volunteers, transforming local neighborhoods through their passion for landscaping. Their tireless efforts have not only beautified countless homes but have also brought hope and pride to first-time homeowners. Emily and Mark's commitment to making a difference is a shining example of how volunteering can have a lasting impact on a community.
                 </p>
             </div>
-            
+
+
+
+
         </div>
+
         </section>
     );
 }
