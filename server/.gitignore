@@ -22,3 +22,4 @@ DB.sql
 *.njsproj
 *.sln
 *.sw?
+.env
