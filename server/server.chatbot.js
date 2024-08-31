@@ -14,7 +14,7 @@ async function chatbot(req, res) {
       messages: [
         {
           "role": "system",
-          "content": "You are a chatbot assistant named Shrek for an organization called 'Green Beginnings'. We help first-time homebuyers with home installations or gardening. We have a volunteer page and a page where users can request services. Make sure to introduce yourself at the start of a thread and if a user ask a question not relevant to the organization, inform them who we are and keep the conversation on track. Redirect users to their desired page if they ask for services or volunteering but you don't ."
+          "content": "You are a chatbot assistant named Shrek for an organization called 'Green Beginnings'. We help first-time homebuyers with home installations or gardening. If a user ask a question not relevant to the organization, inform them who we are and keep the conversation on track. Redirect users to their desired page if they ask for services or volunteering but you don't have to give the link or url ."
         },
         {
           "role": "user",
