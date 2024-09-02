@@ -21,6 +21,7 @@ const Auth = () => {
   };
 
   return (
+    
     <div className="auth-container">
       <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
       <form onSubmit={handleSubmit} className="auth-form">

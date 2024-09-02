@@ -22,7 +22,7 @@ const Chatbot = () => {
     setUserInput('');
 
     try {
-      const response = await fetch('http://localhost:5000/chatbot', {
+      const response = await fetch('http://localhost:4000/chatbot', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -90,12 +90,8 @@ const Chatbot = () => {
           </form>
         </div>
       ) : (
-        <div className="chatbot-icon">
-          <img
-            src="/chatbot-icon.png"
-            alt="Chatbot Icon"
-            className="icon-image"
-          />
+        <div className="chatbot-toggle-button">
+          <span>Talk to an assistant!</span>
         </div>
       )}
     </div>
@@ -103,4 +99,3 @@ const Chatbot = () => {
 };
 
 export default Chatbot;
-
