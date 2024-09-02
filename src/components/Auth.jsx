@@ -21,6 +21,7 @@ const Auth = () => {
   };
 
   return (
+    <div className="auth-page">
     <div className="auth-container">
       <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
       <form onSubmit={handleSubmit} className="auth-form">
@@ -66,6 +67,7 @@ const Auth = () => {
           {isLogin ? 'Sign Up' : 'Login'}
         </button>
       </p>
+    </div>
     </div>
   );
 };

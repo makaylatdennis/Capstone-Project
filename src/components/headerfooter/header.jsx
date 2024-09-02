@@ -17,8 +17,8 @@ function Header() {
             </Link>
           </div>
           <div className="auth-buttons">
-            <button className="sign-in">SIGN IN</button>
-            <button className="apply-now"><Link to="/apply-for-services" className="no-visited">APPLY NOW</Link></button>
+            <button className="sign-in"><Link to="/Auth" className="signin-no-visited">SIGN IN</Link></button>
+            <button className="apply-now"><Link to="/application" className="applynow-no-visited">APPLY NOW</Link></button>
           </div>
         </header>
       );
