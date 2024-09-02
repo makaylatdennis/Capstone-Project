@@ -7,20 +7,22 @@ function Header() {
         <header className="header">
           <nav className="nav">
             <ul className="nav-list">
-              <li><a href="/">HOME</a></li>
-              <li><a href="/">VOLUNTEER</a></li>
-              <li><a href="/">APPLY FOR SERVICES</a></li>
+              <li><Link to="/">HOME</Link></li>
+              <li><Link to="/volunteer">VOLUNTEER</Link></li>
             </ul>
           </nav>
           <div className="logo">
-            <img src="/public/Green Beginnings Logo.png" alt="Green Beginnings Logo" />
+            <Link to="/">
+              <img src="/GB Nav Logo.png" alt="Green Beginnings Logo" />
+            </Link>
           </div>
           <div className="auth-buttons">
             <button className="sign-in">SIGN IN</button>
-            <button className="apply-now">APPLY NOW</button>
+            <button className="apply-now"><Link to="/apply-for-services" className="no-visited">APPLY NOW</Link></button>
           </div>
         </header>
       );
 }
 
 export default Header;
+
