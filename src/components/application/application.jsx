@@ -21,7 +21,7 @@ function Application() {
         </div>
       </div>
       <div className="right-half">
-        <VolApp/>
+        <ServiceInquiryForm />
       </div>
     </div>
   );
