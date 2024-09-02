@@ -1,5 +1,6 @@
 import React from 'react';
 import './volunteer.css';
+import Volform from './volform'
 
 function Volunteer(){
     return (
@@ -40,6 +41,8 @@ function Volunteer(){
 
 
         </div>
+
+        <Volform />
 
         </section>
     );
