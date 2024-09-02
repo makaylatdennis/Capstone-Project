@@ -37,9 +37,6 @@ function Volunteer(){
                 </p>
             </div>
 
-
-
-
         </div>
 
         <Volform />
