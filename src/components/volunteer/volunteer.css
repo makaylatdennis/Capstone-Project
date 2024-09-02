@@ -145,3 +145,16 @@
     
 }
 
+#firstName{
+    display: flex;
+    flex-direction: column;
+}
+
+#lastName{
+    display: flex;
+    flex-direction: column;
+}
+
+.svg-container{
+    height: 40rem;
+}
