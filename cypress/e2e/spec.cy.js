@@ -32,7 +32,6 @@ describe("auth endpoint tests", () => {
       name: "Bob1234",
       email: "Bob@gmail.com",
       password: "BobPass",
-      role: "user",
     }).then((response) => {
       expect(response.status).to.eq(201);
     });
