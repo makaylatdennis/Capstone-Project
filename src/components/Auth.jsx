@@ -8,13 +8,14 @@ const Auth = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState(''); // Used only in signup
   const [submitted, setSubmitted] = useState(null); // To track submission status
-  const navigate = useNavigate(); // To navigate after successful login or signup
+  const navigate = useNavigate(); // To navigate after successful login
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
     setEmail('');
     setPassword('');
     setName('');
+    setSubmitted(null); // Reset submission status when switching forms
   };
 
   const handleSubmit = (e) => {
@@ -41,8 +42,16 @@ const Auth = () => {
         return res.json();
       })
       .then((data) => {
-        setSubmitted(isLogin ? "Logged In" : "Signed Up");
-        navigate(data.redirect); // Redirect to the appropriate page
+        if (isLogin) {
+          setSubmitted("Logged In");
+          navigate(data.redirect); // Redirect on successful login
+        } else {
+          setSubmitted("Signed Up Successfully!");
+          // Reset form fields after successful signup
+          setName('');
+          setEmail('');
+          setPassword('');
+        }
       })
       .catch((err) => {
         alert(err.message);
@@ -54,6 +63,9 @@ const Auth = () => {
     <div className="auth-page">
       <div className="auth-container">
         <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
+        {submitted && !isLogin && (
+          <p className="success-message">{submitted}</p> // Show success message for signup
+        )}
         <form onSubmit={handleSubmit} className="auth-form">
           {!isLogin && (
             <div className="form-group">
