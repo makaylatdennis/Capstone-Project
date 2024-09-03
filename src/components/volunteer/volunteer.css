@@ -5,7 +5,6 @@
     padding: 20px;
     background-color: #ffffffee;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative; 
     overflow: hidden; 
 }
@@ -97,7 +96,7 @@
 
 .vol-testimony {
     position: absolute;
-    top: 95%;
+    top: 73rem;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
@@ -145,3 +144,80 @@
     
 }
 
+#firstName{
+    display: flex;
+    flex-direction: column;
+}
+
+#lastName{
+    display: flex;
+    flex-direction: column;
+}
+
+.svg-container{
+    height: 40rem;
+}
+
+
+@media (max-width: 768px) {
+    .volunteer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .volunteer-content {
+        max-width: 100%;
+    }
+
+    .volunteer-content h1 {
+        font-size: 2em;
+    }
+
+    .volunteer-image {
+        max-width: 100%;
+        margin-top: 20px;
+    }
+
+    .vol-testimony {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .testimony-text {
+        margin-left: 0;
+        padding-right: 0;
+        max-width: 100%;
+    }
+
+    #testimony-img img {
+        width: 15rem;
+        height: 15rem;
+    }
+
+    body {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .volunteer-content h1 {
+        font-size: 1.8rem;
+    }
+    .testimony-text h2 {
+        font-size: .5rem;
+    }
+
+    .testimony-text p {
+        font-size: .5rem;
+        width: 40rem;
+    }
+
+    #testimony-img img {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    body {
+        font-size: 12px;
+    }
+}

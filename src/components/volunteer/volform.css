@@ -1,10 +1,12 @@
 .vol-form {
+    height: 40rem;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #fff;
+    
 }
 
 .vol-header{
@@ -13,15 +15,19 @@
 
 .vol-header h1, h3{
     margin-bottom: 1rem;
+    font-family: 'Montserrat', sans-serif;
+   color: rgb(71, 96, 96);
 }
 
 .vol-input{
-    width: 29.7rem;
+    width: 31rem;
     height: 2rem;
     margin-bottom: 3rem;
 }
 
 .vol-input2{
+    flex-direction: column;
+    display: flex;
     width: 19.6rem;
     height: 2rem;
     margin-bottom: 3rem;
@@ -29,14 +35,16 @@
 
 
 .input-box label {
-    font-size: 1rem;
-    color: #333;
+    font-size: .8rem;
+    color: #4e4c4c;
     margin-bottom: 0.5rem; 
+    font-family: 'Lato', sans-serif;
 }
 
 .form-row {
+    justify-content: space-between;
+    width: 65rem;
     display: flex;
-    margin-bottom: 10px;
 }
 
 
@@ -48,7 +56,29 @@
 
 #street-input{
     display: flex;
-    width: 60rem;
+    width: 65rem;
     margin-bottom: 3rem;
     height: 2rem;
 }
+
+#first-last{
+   display: flex;
+   gap: 20px;
+   justify-content: space-between;
+   width: 65rem;
+
+}
+
+#vol-button{
+    background-color: #a39f9f;
+    color: #fff;
+    width: 6rem;
+    height: 2rem;
+    border-radius: 5px;
+    border: lightslategrey;
+}
+
+#vol-button:hover {
+    background-color: #194a55;
+}
+
