@@ -14,7 +14,7 @@
   }
   
   .chatbot-toggle-button {
-    background-color: #2f6030; 
+    background-color: rgb(88, 143, 134);
     color: white;
     padding: 10px 20px;
     border-radius: 25px;
@@ -58,7 +58,7 @@
   }
   
   .bot-message {
-    background-color: #2f6030;
+    background-color:rgb(88, 143, 134);
     color: white;
     align-self: flex-start;
   }
@@ -85,7 +85,7 @@
   }
   
   .chatbot-button {
-    background-color: #2f6030;
+    background-color: rgb(88, 143, 134);
     border: none;
     color: white;
     padding: 10px 15px;
@@ -100,5 +100,27 @@
   
   .chatbot-button:focus {
     outline: none;
+  }
+  
+  .chatbot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #f0e6d2; 
+    color: rgb(88, 143, 134);
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .chatbot-close-button {
+    background: none;
+    border: none;
+    color: rgb(88, 143, 134);
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .chatbot-close-button:hover {
+    color: #f0e6d2; /* Off-white color */
   }
   
