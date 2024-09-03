@@ -1,4 +1,3 @@
-const { query } = require("express");
 const jwt = require("jsonwebtoken");
 const mysql = require("mysql2");
 require("dotenv").config();
@@ -200,6 +199,7 @@ module.exports = {
 
       queryPromise.then((results) => {
         res.status(200).send(results);
+        console.log(results);
       });
 
       queryPromise.catch((err) => {
@@ -274,6 +274,48 @@ module.exports = {
         res.status(500).send("Error retrieving events");
       });
     },
+    getApproved: (req, res) => {
+      const queryPromise = callQuery(
+        "SELECT * FROM events WHERE status = 'approved'"
+      );
+
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
+
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error retrieving events");
+      });
+    },
+    getPending: (req, res) => {
+      const queryPromise = callQuery(
+        "SELECT * FROM events WHERE status = 'pending'"
+      );
+
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
+
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error retrieving events");
+      });
+    },
+    getRejected: (req, res) => {
+      const queryPromise = callQuery(
+        "SELECT * FROM events WHERE status = 'rejected'"
+      );
+
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
+
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error retrieving events");
+      });
+    },
     getByID: (req, res) => {
       const id = req.params.id;
       const queryPromise = callQuery(`SELECT * FROM events WHERE id = ${id}`);
@@ -285,6 +327,36 @@ module.exports = {
       queryPromise.catch((err) => {
         console.log(err);
         res.status(500).send("Error retrieving events");
+      });
+    },
+    approve: (req, res) => {
+      const id = req.params.id;
+      const queryPromise = callQuery(
+        `UPDATE events SET status = 'approved' WHERE id = ${id}`
+      );
+
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
+
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error updating events");
+      });
+    },
+    reject: (req, res) => {
+      const id = req.params.id;
+      const queryPromise = callQuery(
+        `UPDATE events SET status = 'rejected' WHERE id = ${id}`
+      );
+
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
+
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error updating events");
       });
     },
     update: (req, res) => {
@@ -317,32 +389,88 @@ module.exports = {
       });
     },
     create: (req, res) => {
-      const { name, email, phone, date, time, description } = req.body;
-      const queryPromise = callQuery(
-        `INSERT INTO events (name, email, phone, date, time, description) VALUES ("${name}", "${email}", ${phone}, ${date}, ${time}, ${description})`
+      const { name, date, time, description } = req.body;
+      const token = cookie.get(req.headers.cookie, "token");
+
+      if (!token) {
+        return res.status(400).json({ message: "Please login" });
+      }
+
+      const { email, password } = jwt.verify(token, process.env.SECRET_KEY);
+
+      const userIDQuery = callQuery(
+        `SELECT id FROM users WHERE email = "${email}" AND password = "${password}"`
       );
-      queryPromise.then((results) => {
-        res.status(200).send(results);
+
+      userIDQuery.then((results) => {
+        if (results.length === 0) {
+          res.status(400).json({ message: "Invalid email or password" });
+          res.clearCookie("token");
+          return;
+        } else {
+          const userID = results[0].id;
+
+          const queryPromise = callQuery(
+            `INSERT INTO events (name, userID, date, time, description, status) VALUES ("${name}", ${userID}, ${date}, ${time}, "${description}, "approved")`
+          );
+          queryPromise.then((results) => {
+            res.status(200).send(results);
+          });
+
+          queryPromise.catch((err) => {
+            console.log(err);
+            res.status(500).send("Error creating events");
+          });
+        }
       });
 
-      queryPromise.catch((err) => {
+      userIDQuery.catch((err) => {
         console.log(err);
-        res.status(500).send("Error creating events");
+        res.status(500).json({ message: "Internal server error" });
+        return;
       });
     },
     // Open API // Public
     request: (req, res) => {
-      const { name, email, phone, date, time, message } = req.body;
-      const queryPromise = callQuery(
-        `INSERT INTO events (name, email, phone, date, time, message) VALUES ("${name}", "${email}", ${phone}, ${date}, ${time}, ${message})`
+      const { name, date, time, description } = req.body;
+      const token = cookie.get(req.headers.cookie, "token");
+
+      if (!token) {
+        return res.status(400).json({ message: "Please login" });
+      }
+
+      const { email, password } = jwt.verify(token, process.env.SECRET_KEY);
+
+      const userIDQuery = callQuery(
+        `SELECT id FROM users WHERE email = "${email}" AND password = "${password}"`
       );
-      queryPromise.then((results) => {
-        res.status(200).send(results);
+
+      userIDQuery.then((results) => {
+        if (results.length === 0) {
+          res.status(400).json({ message: "Invalid email or password" });
+          res.clearCookie("token");
+          return;
+        } else {
+          const userID = results[0].id;
+
+          const queryPromise = callQuery(
+            `INSERT INTO events (name, userID, date, time, description) VALUES ("${name}", ${userID}, ${date}, ${time}, "${description}")`
+          );
+          queryPromise.then((results) => {
+            res.status(200).send(results);
+          });
+
+          queryPromise.catch((err) => {
+            console.log(err);
+            res.status(500).send("Error creating events");
+          });
+        }
       });
 
-      queryPromise.catch((err) => {
+      userIDQuery.catch((err) => {
         console.log(err);
-        res.status(500).send("Error creating events");
+        res.status(500).json({ message: "Internal server error" });
+        return;
       });
     },
     getByUser: (req, res) => {
@@ -367,132 +495,92 @@ module.exports = {
         });
       }
     },
-    vol: {
-      checkCount: function (eventID) {
-        const queryPromise = callQuery(
-          `SELECT max_volunteers, COUNT(*) as current_volunteers 
-          FROM volunteers 
-          WHERE eventID = ${eventID};`
-        );
-        return queryPromise;
-      },
-      getUser: function () {
-        const token = cookie.get(req.headers.cookie, "token");
-        if (!token) {
-          return res.status(400).json({ message: "Please login" });
-        } else {
-          const { email, password } = jwt.verify(token, process.env.SECRET_KEY);
-          const queryPromise = callQuery(
-            `SELECT * FROM users WHERE email = "${email}" AND password = "${password}"`
-          );
-          return queryPromise;
-        }
-      },
-      add: (req, res) => {
-        const { eventID, name } = req.body;
-        let userID;
+  },
+  vol: {
+    get: (req, res) => {
+      const queryPromise = callQuery("SELECT * FROM volunteers");
 
-        const checkCount = this.checkCount(eventID);
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
 
-        checkCount.then((results) => {
-          if (results[0].current_volunteers >= results[0].max_volunteers) {
-            res.status(400).send("Event is full");
-          } else {
-            // Get user ID
-            const getUserPromise = this.getUser();
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error retrieving volunteers");
+      });
+    },
+    getByID: (req, res) => {
+      const id = req.params.id;
+      const queryPromise = callQuery(
+        `SELECT * FROM volunteers WHERE id = ${id}`
+      );
 
-            getUserPromise.then((results) => {
-              userID = results[0].id;
-              if (!name) {
-                name = results[0].name;
-              }
-            });
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
 
-            getUserPromise.catch((err) => {
-              console.log(err);
-              res.status(500).send("Error adding volunteer");
-              return;
-            });
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error retrieving volunteers");
+      });
+    },
+    update: (req, res) => {
+      const id = req.params.id;
+      const { eventID, name, userID } = req.body;
 
-            const queryPromise = callQuery(
-              `INSERT INTO volunteers (eventID, name
-              }, userID) VALUES (${eventID}, "${name}", ${userID})`
-            );
-            queryPromise.then((results) => {
-              res.status(200).send(results);
-            });
+      const queryPromise = callQuery(
+        `UPDATE volunteers SET eventID = ${eventID}, name = "${name}", userID = ${userID} WHERE id = ${id}`
+      );
 
-            queryPromise.catch((err) => {
-              console.log(err);
-              res.status(500).send("Error adding volunteer");
-            });
-          }
-        });
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
 
-        checkCount.catch((err) => {
-          console.log(err);
-          res.status(500).send("Error adding volunteer");
-        });
-      },
-      get: (req, res) => {
-        const queryPromise = callQuery("SELECT * FROM volunteers");
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error updating volunteers");
+      });
+    },
+    delete: (req, res) => {
+      const id = req.params.id;
+      const queryPromise = callQuery(`DELETE FROM volunteers WHERE id = ${id}`);
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
 
-        queryPromise.then((results) => {
-          res.status(200).send(results);
-        });
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error deleting volunteers");
+      });
+    },
+    add: (req, res) => {
+      const {
+        firstName,
+        lastName,
+        email,
+        phone,
+        address,
+        city,
+        state,
+        zip,
+        eventID,
+      } = req.body;
+      const queryPromise = callQuery(
+        `INSERT INTO volunteers (firstName, lastName, Email, phone, address, city, state, zip${
+          !eventID ? "" : ", eventID"
+        }) VALUES ("${firstName}", "${lastName}", "${email}", "${phone}", "${address}", "${city}", "${state}", "${zip}"${
+          !eventID ? "" : `, ${eventID}`
+        })`
+      );
 
-        queryPromise.catch((err) => {
-          console.log(err);
-          res.status(500).send("Error retrieving volunteers");
-        });
-      },
-      getByID: (req, res) => {
-        const id = req.params.id;
-        const queryPromise = callQuery(
-          `SELECT * FROM volunteers WHERE id = ${id}`
-        );
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
 
-        queryPromise.then((results) => {
-          res.status(200).send(results);
-        });
-
-        queryPromise.catch((err) => {
-          console.log(err);
-          res.status(500).send("Error retrieving volunteers");
-        });
-      },
-      update: (req, res) => {
-        const id = req.params.id;
-        const { eventID, name, userID } = req.body;
-
-        const queryPromise = callQuery(
-          `UPDATE volunteers SET eventID = ${eventID}, name = "${name}", userID = ${userID} WHERE id = ${id}`
-        );
-
-        queryPromise.then((results) => {
-          res.status(200).send(results);
-        });
-
-        queryPromise.catch((err) => {
-          console.log(err);
-          res.status(500).send("Error updating volunteers");
-        });
-      },
-      delete: (req, res) => {
-        const id = req.params.id;
-        const queryPromise = callQuery(
-          `DELETE FROM volunteers WHERE id = ${id}`
-        );
-        queryPromise.then((results) => {
-          res.status(200).send(results);
-        });
-
-        queryPromise.catch((err) => {
-          console.log(err);
-          res.status(500).send("Error deleting volunteers");
-        });
-      },
-      // Open API // Public
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error adding volunteers");
+      });
     },
   },
   contact: {
