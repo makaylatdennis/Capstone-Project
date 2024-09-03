@@ -7,7 +7,7 @@ import Homepage from './components/home/homepage';
 import Volunteer from "./components/volunteer/volunteer";
 import Application from "./components/application/application";
 // import NotFoundPage from './components/notfoundpage';
-// import Chatbot from "./components/Chatbot";
+import Chatbot from "./components/Chatbot";
 import Auth from "./components/Auth";
 
 function App() {
@@ -21,7 +21,8 @@ function App() {
         <Route path="/Auth" element={<Auth />} />
         {/* <Route path="/*" element={<NotFoundPage />} /> */}
       </Routes>
-      <Footer />
+        <Chatbot />
+        <Footer />
     </Router>
   );
 }

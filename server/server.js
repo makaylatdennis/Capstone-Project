@@ -4,10 +4,11 @@ require("dotenv").config();
 
 const app = express();
 const router = express.Router();
-const port = process.env.PORT || 6000;
-// const chatbot = require("./server.chatbot");
+const port = process.env.PORT || 4000;
+
 const DB = require("./server.DB"); // this is for database connection and verification
 const cors = require("cors");
+const chatbot = require("./server.chatbot");
 
 app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.urlencoded({ extended: true }));
@@ -20,7 +21,7 @@ app.get("*", (req, res) => {
 });
 
 // API Endpoints
-
+app.post("/chatbot", chatbot.chatbot);
 // user endpoints
 router.get("/users", DB.auth.verifyAdmin, DB.users.get); // Protected API
 router.get("/users/:id", DB.auth.verifyAdmin, DB.users.getByID);
