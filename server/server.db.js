@@ -71,17 +71,9 @@ module.exports = {
   auth: {
     signup: (req, res) => {
       console.log(req.body);
-      const { name, role, email, password } = req.body;
+      const { name, email, password } = req.body;
 
-      if (role !== "admin" && role !== "user" && role !== "provider") {
-        res.status(400).json({ message: "Invalid role" });
-        return;
-      }
-      if (role === "admin") {
-        res.status(400).json({ message: "Cannot change role to admin" });
-        return;
-      }
-      if (!name || !role || !email || !password) {
+      if (!name || !email || !password) {
         res.status(400).json({ message: "Missing fields" });
         return;
       }
@@ -99,7 +91,7 @@ module.exports = {
           // Email does not exist
 
           const queryPromise = callQuery(
-            `INSERT INTO users (name, role, email, password) VALUES ("${name}", "${role}", "${email}", "${password}")`
+            `INSERT INTO users (name, role, email, password) VALUES ("${name}", "user", "${email}", "${password}")`
           );
 
           queryPromise.then((results) => {
