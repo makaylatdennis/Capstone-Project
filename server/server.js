@@ -5,7 +5,7 @@ require("dotenv").config();
 const app = express();
 const router = express.Router();
 const port = process.env.PORT || 4000;
-// const chatbot = require("./server.chatbot");
+
 const DB = require("./server.DB"); // this is for database connection and verification
 const cors = require("cors");
 const chatbot = require("./server.chatbot");
