@@ -12,6 +12,10 @@ const Chatbot = () => {
     setIsOpen(!isOpen);
   };
 
+  const closeChatbot = () => {
+    setIsOpen(false);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!userInput.trim()) return;
@@ -59,10 +63,15 @@ const Chatbot = () => {
     <div
       ref={chatbotRef}
       className={`chatbot-container ${isOpen ? 'open' : ''}`}
-      onClick={() => !isOpen && toggleChatbot()}
     >
       {isOpen ? (
         <div className="chatbot-content">
+          <div className="chatbot-header">
+            <h4>Chat with Assistant</h4>
+            <button className="chatbot-close-button" onClick={closeChatbot}>
+              X
+            </button>
+          </div>
           <div className="chatbot-messages">
             {messages.map((msg, index) => (
               <div
@@ -90,7 +99,7 @@ const Chatbot = () => {
           </form>
         </div>
       ) : (
-        <div className="chatbot-toggle-button">
+        <div className="chatbot-toggle-button" onClick={toggleChatbot}>
           <span>Talk to an assistant!</span>
         </div>
       )}

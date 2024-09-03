@@ -16,7 +16,7 @@
   }
   
   .auth-container h2 {
-    color: #2f6030; /* Emerald green color */
+    color: rgb(88, 143, 134);
     text-align: center;
     margin-bottom: 20px;
   }
@@ -32,7 +32,7 @@
   
   .form-group label {
     margin-bottom: 5px;
-    color: #2f6030; /* Emerald green color */
+    color: rgb(88, 143, 134); 
   }
   
   .form-group input {
@@ -57,7 +57,7 @@
   }
   
   .auth-button:hover {
-    background-color: #2f6030; /* Emerald green hover color */
+    background-color: #2f6030; 
   }
   
   .toggle-text {
@@ -76,11 +76,11 @@
   }
   
   .toggle-button:hover {
-    color: #2f6030; /* Emerald green color */
+    color: rgb(88, 143, 134); 
   }
   
   .success-message {
-    color: #2f6030; /* Emerald green color */
+    color: rgb(88, 143, 134); 
     text-align: center;
     margin-bottom: 15px;
     font-weight: bold;
