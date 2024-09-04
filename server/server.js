@@ -23,7 +23,7 @@ app.get("*", (req, res) => {
 // API Endpoints
 
 // chatbot endpoint
-app.post("/chatbot", chatbot.chatbot);
+router.post("/chatbot", chatbot.chatbot);
 
 // user endpoints
 router.get("/users", DB.auth.verifyAdmin, DB.users.get); // Protected API

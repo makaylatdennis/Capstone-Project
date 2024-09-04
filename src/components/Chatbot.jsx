@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
-import './Chatbot.css';
+import React, { useState, useRef } from "react";
+import "./Chatbot.css";
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [userInput, setUserInput] = useState('');
+  const [userInput, setUserInput] = useState("");
   const chatbotRef = useRef(null);
 
   const toggleChatbot = () => {
@@ -22,14 +22,14 @@ const Chatbot = () => {
 
     setLoading(true);
     const userMessage = userInput.trim();
-    setMessages([...messages, { role: 'user', content: userMessage }]);
-    setUserInput('');
+    setMessages([...messages, { role: "user", content: userMessage }]);
+    setUserInput("");
 
     try {
-      const response = await fetch('http://localhost:4000/chatbot', {
-        method: 'POST',
+      const response = await fetch("/api/chatbot", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ choice: userMessage }),
       });
@@ -41,18 +41,18 @@ const Chatbot = () => {
       const data = await response.json();
 
       if (!data.reply) {
-        throw new Error('No reply found in response');
+        throw new Error("No reply found in response");
       }
 
       setMessages((prevMessages) => [
         ...prevMessages,
-        { role: 'bot', content: data.reply },
+        { role: "bot", content: data.reply },
       ]);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       setMessages((prevMessages) => [
         ...prevMessages,
-        { role: 'bot', content: 'Sorry, something went wrong.' },
+        { role: "bot", content: "Sorry, something went wrong." },
       ]);
     } finally {
       setLoading(false);
@@ -62,7 +62,7 @@ const Chatbot = () => {
   return (
     <div
       ref={chatbotRef}
-      className={`chatbot-container ${isOpen ? 'open' : ''}`}
+      className={`chatbot-container ${isOpen ? "open" : ""}`}
     >
       {isOpen ? (
         <div className="chatbot-content">
@@ -77,7 +77,7 @@ const Chatbot = () => {
               <div
                 key={index}
                 className={`chatbot-message ${
-                  msg.role === 'user' ? 'user-message' : 'bot-message'
+                  msg.role === "user" ? "user-message" : "bot-message"
                 }`}
               >
                 {msg.content}
