@@ -33,7 +33,7 @@ function Volunteer(){
             <div className="testimony-text">
                 <h2 id="testimony-heading">Volunteer Stories: Emily Johnson & Mark Davis</h2>
                 <p>
-                For the past three years, Emily Johnson and Mark Davis have been dedicated volunteers, transforming local neighborhoods through their passion for landscaping. Their tireless efforts have not only beautified countless homes but have also brought hope and pride to first-time homeowners. Emily and Mark's commitment to making a difference is a shining example of how volunteering can have a lasting impact on a community.
+                For the past three years, Emily Johnson and Mark Davis have been volunteering with Green Beginnings, transforming local neighborhoods through their passion for landscaping. Their efforts have not only helped countless first-time homeowners but also helped build a stronger community. Emily and Mark's commitment to making a difference is a shining example of how volunteering can have a lasting impact on a community.
                 </p>
             </div>
 
