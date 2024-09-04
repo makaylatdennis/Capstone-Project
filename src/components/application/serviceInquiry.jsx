@@ -13,6 +13,10 @@ function ServiceInquiryForm() {
     const emailRef = useRef();
     const phoneNumberRef = useRef();
     const serviceRef = useRef();
+    const streetRef = useRef();
+    const postalCodeRef = useRef();
+    const cityRef = useRef();
+    const stateRef = useRef();
 
     function validateForm() {
         const firstName = firstNameRef.current.value;
@@ -36,14 +40,45 @@ function ServiceInquiryForm() {
         return validFirstName && validLastName && validEmail && validPhoneNumber && validService;
     }
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
         if (validateForm()) {
-            console.log('Form submitted successfully');
+            const formData = {
+                firstName: firstNameRef.current.value,
+                lastName: lastNameRef.current.value,
+                email: emailRef.current.value,
+                phone: phoneNumberRef.current.value,
+                service: serviceRef.current.value,
+                address: streetRef.current.value,
+                zip: postalCodeRef.current.value,
+                city: cityRef.current.value,
+                state: stateRef.current.value
+            };
+    
+            try {
+                const response = await fetch('/api/applications', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+    
+                if (response.ok) {
+                    console.log('Form submitted successfully');
+                   
+                } else {
+                    const errorResponse = await response.json();
+                    console.error(' Submission failed', errorResponse); 
+                }
+            } catch (error) {
+                console.error('Error submitting the form', error); 
+            }
         } else {
             console.log('Validation failed');
         }
     }
+    
 
     return (
         <div className='service-inquiry-container'>
@@ -80,21 +115,21 @@ function ServiceInquiryForm() {
     
                 <div className="input-box">
                     <label htmlFor="serviceStreet">Street Address</label>
-                    <input id='serviceStreet' type='text' name='serviceStreet' className="service-input" required />
+                    <input id='serviceStreet' type='text' name='serviceStreet' className="service-input" ref={streetRef} required />
                 </div>
     
                 <div className='form-row2'>
                     <div className="input-box">
                         <label htmlFor="servicePostalCode">Postal Code</label>
-                        <input id='servicePostalCode' className='service-input2' type='text' name='servicePostalCode' required />
+                        <input id='servicePostalCode' className='service-input2' type='text' name='servicePostalCode' ref={postalCodeRef} required />
                     </div>
                     <div className="input-box">
                         <label htmlFor="serviceCity">City</label>
-                        <input id='serviceCity' className='service-input2' type='text' name='serviceCity' required />
+                        <input id='serviceCity' className='service-input2' type='text' name='serviceCity' ref={cityRef} required />
                     </div>
                     <div className="input-box">
                         <label htmlFor="serviceState">State</label>
-                        <input id='serviceState' className='service-input2' type='text' name='serviceState' required />
+                        <input id='serviceState' className='service-input2' type='text' name='serviceState' ref={stateRef} required />
                     </div>
                 </div>
     
