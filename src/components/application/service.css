@@ -1,0 +1,91 @@
+.service-inquiry-container {
+    width: 50vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    position: relative; 
+    overflow: hidden;
+}
+
+.service-inquiry-content {
+    flex-direction: column;
+    display: flex;
+    gap: 20px;
+}
+
+.service-inquiry-content h3 {
+    color: rgb(71, 96, 96);
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.service-inquiry-content h1 {
+    color: rgb(88, 143, 134);
+    font-size: 2.5em;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.service-inquiry-content p {
+    color: #666;
+    font-size: 1em;
+    margin-bottom: 20px;
+    font-family: 'Lato', sans-serif;
+}
+
+.service-button {
+    background-color: rgb(238 197 187);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 20px;
+    cursor: pointer;
+    text-transform: uppercase;
+    width: 7rem;
+}
+
+.service-button:hover {
+    background-color: #a37382;
+}
+
+.input-box {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.service-svg-container {
+    height: 80rem;
+}
+
+.form-row2 {
+    justify-content: space-between;
+    width: 40rem;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.service-input, .service-input2, .service-textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+
+.error p{
+color: red;
+}
+
+@media(max-width: 768px){
+    .service-inquiry-container{
+      width: 100vw;  
+    }
+    
+}

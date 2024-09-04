@@ -1,0 +1,109 @@
+.service-app {
+    display: flex;
+    height: 100vh;
+    flex-direction: row; 
+}
+
+#firsthalf {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+    padding: 2rem;
+    background-color: rgb(88 143 134); 
+    width: 50%; 
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
+
+#app-logo {
+    height: 15rem;
+    position: absolute; 
+    top: 1rem; 
+    left: 1rem; 
+}
+
+#app-logo img {
+    height: 10rem; 
+    margin-left: 0; 
+}
+
+#app-info {
+    text-align: left; 
+    max-width: 80%; 
+    margin-top: 2rem; 
+}
+
+#app-info h3 {
+    color: rgb(196 208 211);
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+#app-info p {
+    font-size: 1rem;
+    margin-bottom: 3rem;
+}
+
+.right-half{
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.app-icon{
+    color: rgb(255, 255, 255);
+}
+
+#service-heading{
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 425px){
+    #firsthalf{
+        display: none;
+    }
+
+    .service-inquiry-container{
+        width: 100vw;
+        align-items: flex-start;
+    }
+
+    .form-row2{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .service-inquiry-content h3{
+        width: 20rem;
+    }
+
+   
+}
+
+@media (max-width: 820px){
+
+    .service-inquiry-container{
+        width: 100vw;
+        align-items: flex-start;
+    }
+
+    .form-row2{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .service-inquiry-content h3{
+        width: 20rem;
+    }
+
+    .input-box{
+        width: 20rem;
+    }
+
+   
+}

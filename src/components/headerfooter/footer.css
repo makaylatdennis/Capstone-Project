@@ -1,0 +1,159 @@
+
+footer {
+    margin-bottom: 0;
+
+}
+
+footer .container {
+    margin-top: 2rem;
+    background-color:rgb(71, 96, 96);
+    color: #fff;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0%;
+    margin-bottom: 0%;
+    width: 100%;
+}
+
+.footer-col {
+    text-align: left;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+#footer1 h3 {
+    margin-top: 1rem;
+}
+
+.footer-col p {
+    margin-top: 1rem;
+}
+
+footer .row {
+    display: flex;
+    justify-content: space-between; 
+    gap: 20px; 
+    list-style: none;
+    width: 90%;
+}
+
+#footer1 {
+    flex-direction: column;
+    text-align: left;
+    list-style: none;
+}
+
+#footer-logo {
+    font-family: "Allura", cursive;
+    font-weight: bolder;
+    font-style: normal; 
+    font-size: xx-large;
+}
+
+#footer-logo img{
+    height: 8rem;
+}
+
+#footer1 p {
+    margin-top: 1rem;
+    font-size: smaller;
+    text-align: left;
+    font-weight: lighter;
+    width: 25rem;
+}
+
+#newsletter-input {
+    background-color:rgb(71, 96, 96);
+    padding-left: 10px;
+    margin-top: 1rem; 
+    height: 2.4rem;
+    width: 14rem;
+    border-radius: 2px;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+}
+
+#newsletter-input::placeholder {
+    color: rgb(255, 255, 255); 
+    opacity: 1; 
+  }
+
+#submit-bttn {
+    margin-left: .5rem;
+    border-radius: 2px;
+    height: 2.4rem;
+    width: 7rem;
+    font-size: smaller;
+    color: rgb(71, 96, 96);
+    border: 2px solid #ffffff;
+}
+
+.footer-bottom {
+    border-top: 1px solid #cccccc; 
+    padding-top: 10px; 
+    font-size: 0.9em;
+    width: 80%;
+    color: #ffffff;
+  }
+
+#footer2 {
+    text-align: left;
+}
+
+#footer2 ul {
+    margin-top: 1rem;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+
+    .container{
+        overflow: hidden;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+  .social-icons {
+    margin-bottom: 10px;
+    margin-top: 1rem;
+  }
+  
+  .social-icons a {
+    color: #fff;
+    margin: 0 10px;
+    font-size: 24px;
+    transition: color 0.3s ease;
+  }
+  
+  .social-icons a:hover {
+    color: #ddd;
+  }
+  
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+ .footer-col ul{
+    list-style: none;
+ }
