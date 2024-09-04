@@ -8,11 +8,18 @@ const port = process.env.PORT || 4000;
 
 const DB = require("./server.DB"); // this is for database connection and verification
 const cors = require("cors");
+const router = express.Router();
+const port = process.env.PORT || 4000;
+
+const DB = require("./server.DB"); // this is for database connection and verification
+const cors = require("cors");
 const chatbot = require("./server.chatbot");
 
 app.use(express.static(path.join(__dirname, "dist")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use("/api", router);
+app.use(cors()); // Allow requests from different origins
 app.use("/api", router);
 app.use(cors()); // Allow requests from different origins
 
@@ -84,5 +91,6 @@ router.delete("/contacts/:id", DB.auth.verifyAdmin, DB.contact.delete);
 router.post("/contacts", DB.auth.verify, DB.contact.create); // Open API // Server Only
 
 app.listen(port, () => {
+  console.log(`Server is running on port http://localhost:${port}`);
   console.log(`Server is running on port http://localhost:${port}`);
 });
