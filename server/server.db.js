@@ -68,9 +68,9 @@ function callQuery(query) {
 handleDisconnect();
 
 module.exports = {
+  // Auth endpoints
   auth: {
     signup: (req, res) => {
-      console.log(req.body);
       const { name, email, password } = req.body;
 
       if (!name || !email || !password) {
@@ -127,6 +127,12 @@ module.exports = {
     },
     login: (req, res) => {
       const { email, password } = req.body;
+
+      if (!email || !password) {
+        res.status(400).json({ message: "Missing fields" });
+        return;
+      }
+
       const queryPromise = callQuery(
         `SELECT * FROM users WHERE email = "${email}" AND password = "${password}"`
       );
@@ -184,6 +190,7 @@ module.exports = {
       }
     },
   },
+  // user endpoints
   users: {
     // Protected API
     get: (req, res) => {
@@ -252,6 +259,7 @@ module.exports = {
       });
     },
   },
+  // event endpoints
   events: {
     // Protected API
     get: (req, res) => {
@@ -354,6 +362,12 @@ module.exports = {
     update: (req, res) => {
       const id = req.params.id;
       const { name, email, phone, date, time, description } = req.body;
+
+      if (!name || !email || !phone || !date || !time || !description) {
+        res.status(400).json({ message: "Missing fields" });
+        return;
+      }
+
       const queryPromise = callQuery(
         `UPDATE events SET name = "${name}", email = "${email}", phone = ${phone}, date = ${date}, time = ${time}, description = ${description} WHERE id = ${id}`
       );
@@ -382,6 +396,12 @@ module.exports = {
     },
     create: (req, res) => {
       const { name, date, time, description } = req.body;
+
+      if (!name || !date || !time || !description) {
+        res.status(400).json({ message: "Missing fields" });
+        return;
+      }
+
       const token = cookie.get(req.headers.cookie, "token");
 
       if (!token) {
@@ -404,49 +424,6 @@ module.exports = {
 
           const queryPromise = callQuery(
             `INSERT INTO events (name, userID, date, time, description, status) VALUES ("${name}", ${userID}, ${date}, ${time}, "${description}, "approved")`
-          );
-          queryPromise.then((results) => {
-            res.status(200).send(results);
-          });
-
-          queryPromise.catch((err) => {
-            console.log(err);
-            res.status(500).send("Error creating events");
-          });
-        }
-      });
-
-      userIDQuery.catch((err) => {
-        console.log(err);
-        res.status(500).json({ message: "Internal server error" });
-        return;
-      });
-    },
-    // Open API // Public
-    request: (req, res) => {
-      const { name, date, time, description } = req.body;
-      const token = cookie.get(req.headers.cookie, "token");
-
-      if (!token) {
-        return res.status(400).json({ message: "Please login" });
-      }
-
-      const { email, password } = jwt.verify(token, process.env.SECRET_KEY);
-
-      const userIDQuery = callQuery(
-        `SELECT id FROM users WHERE email = "${email}" AND password = "${password}"`
-      );
-
-      userIDQuery.then((results) => {
-        if (results.length === 0) {
-          res.status(400).json({ message: "Invalid email or password" });
-          res.clearCookie("token");
-          return;
-        } else {
-          const userID = results[0].id;
-
-          const queryPromise = callQuery(
-            `INSERT INTO events (name, userID, date, time, description) VALUES ("${name}", ${userID}, ${date}, ${time}, "${description}")`
           );
           queryPromise.then((results) => {
             res.status(200).send(results);
@@ -488,6 +465,199 @@ module.exports = {
       }
     },
   },
+  // application endpoints
+  app: {
+    get: (req, res) => {
+      const queryPromise = callQuery("SELECT * FROM applications");
+
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
+
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error retrieving applications");
+      });
+    },
+    getPending: (req, res) => {
+      const queryPromise = callQuery(
+        "SELECT * FROM applications WHERE status = 'pending'"
+      );
+
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
+
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error retrieving applications");
+      });
+    },
+    getApproved: (req, res) => {
+      const queryPromise = callQuery(
+        "SELECT * FROM applications WHERE status = 'approved'"
+      );
+
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
+
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error retrieving applications");
+      });
+    },
+    getRejected: (req, res) => {
+      const queryPromise = callQuery(
+        "SELECT * FROM applications WHERE status = 'rejected'"
+      );
+
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
+
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error retrieving applications");
+      });
+    },
+    getByID: (req, res) => {
+      const id = req.params.id;
+      const queryPromise = callQuery(
+        `SELECT * FROM applications WHERE id = ${id}`
+      );
+
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
+
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error retrieving applications");
+      });
+    },
+    approve: (req, res) => {
+      const id = req.params.id;
+      const queryPromise = callQuery(
+        `UPDATE applications SET status = 'approved' WHERE id = ${id}`
+      );
+
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
+
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error updating applications");
+      });
+    },
+    reject: (req, res) => {
+      const id = req.params.id;
+      const queryPromise = callQuery(
+        `UPDATE applications SET status = 'rejected' WHERE id = ${id}`
+      );
+
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
+
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error updating applications");
+      });
+    },
+    update: (req, res) => {
+      const id = req.params.id;
+      const {
+        firstName,
+        lastName,
+        email,
+        address,
+        zip,
+        city,
+        state,
+        phone,
+        eventID,
+        status,
+      } = req.body;
+
+      if (
+        !firstName ||
+        !lastName ||
+        !email ||
+        !address ||
+        !zip ||
+        !city ||
+        !state ||
+        !phone ||
+        !eventID ||
+        !status
+      ) {
+        res.status(400).json({ message: "Missing fields" });
+        return;
+      }
+
+      const queryPromise = callQuery(
+        `UPDATE applications SET firstName = "${firstName}", lastName = "${lastName}", email = "${email}", address = "${address}", zip = "${zip}", city = "${city}", state = "${state}", phone = "${phone}", eventID = ${eventID}, status = "${status}" WHERE id = ${id}`
+      );
+
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
+
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error updating applications");
+      });
+    },
+    delete: (req, res) => {
+      const id = req.params.id;
+
+      const queryPromise = callQuery(
+        `DELETE FROM applications WHERE id = ${id}`
+      );
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
+
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error deleting applications");
+      });
+    },
+    create: (req, res) => {
+      const { firstName, lastName, email, phone, address, zip, city, state } =
+        req.body;
+
+      if (
+        !firstName ||
+        !lastName ||
+        !email ||
+        !phone ||
+        !address ||
+        !zip ||
+        !city ||
+        !state
+      ) {
+        res.status(400).json({ message: "Missing fields" });
+        return;
+      }
+
+      const queryPromise = callQuery(
+        `INSERT INTO applications (firstName, lastName, email, address, zip, city, state, phone, eventID, status) VALUES ("${firstName}", "${lastName}", "${email}", "${address}", "${zip}", "${city}", "${state}", "${phone}", "pending")`
+      );
+
+      queryPromise.then((results) => {
+        res.status(200).send(results);
+      });
+
+      queryPromise.catch((err) => {
+        console.log(err);
+        res.status(500).send("Error adding applications");
+      });
+    },
+  },
+  // volunteer endpoints
   vol: {
     get: (req, res) => {
       const queryPromise = callQuery("SELECT * FROM volunteers");
@@ -518,10 +688,36 @@ module.exports = {
     },
     update: (req, res) => {
       const id = req.params.id;
-      const { eventID, name, userID } = req.body;
+      const {
+        firstName,
+        lastName,
+        email,
+        phone,
+        address,
+        city,
+        state,
+        zip,
+        eventID,
+      } = req.body;
+
+      if (
+        !firstName ||
+        !lastName ||
+        !email ||
+        !phone ||
+        !address ||
+        !city ||
+        !state ||
+        !zip
+      ) {
+        res.status(400).json({ message: "Missing fields" });
+        return;
+      }
 
       const queryPromise = callQuery(
-        `UPDATE volunteers SET eventID = ${eventID}, name = "${name}", userID = ${userID} WHERE id = ${id}`
+        `UPDATE volunteers SET firstName = "${firstName}", lastName = "${lastName}", email = "${email}", phone = "${phone}", address = "${address}", city = "${city}", state = "${state}", zip = "${zip}"${
+          !eventID ? "" : `, eventID = "${eventID}"`
+        } WHERE id = ${id}`
       );
 
       queryPromise.then((results) => {
@@ -546,23 +742,25 @@ module.exports = {
       });
     },
     add: (req, res) => {
-      const {
-        firstName,
-        lastName,
-        email,
-        phone,
-        address,
-        city,
-        state,
-        zip,
-        eventID,
-      } = req.body;
+      const { firstName, lastName, email, phone, address, zip, city, state } =
+        req.body;
+
+      if (
+        !firstName ||
+        !lastName ||
+        !email ||
+        !phone ||
+        !address ||
+        !zip ||
+        !city ||
+        !state
+      ) {
+        res.status(400).json({ message: "Missing fields" });
+        return;
+      }
+
       const queryPromise = callQuery(
-        `INSERT INTO volunteers (firstName, lastName, Email, phone, address, city, state, zip${
-          !eventID ? "" : ", eventID"
-        }) VALUES ("${firstName}", "${lastName}", "${email}", "${phone}", "${address}", "${city}", "${state}", "${zip}"${
-          !eventID ? "" : `, ${eventID}`
-        })`
+        `INSERT INTO volunteers (firstName, lastName, email, phone, address, city, state, zip) VALUES ("${firstName}", "${lastName}", "${email}", "${phone}", "${address}", "${city}", "${state}", "${zip}")`
       );
 
       queryPromise.then((results) => {
@@ -575,6 +773,7 @@ module.exports = {
       });
     },
   },
+  // contact endpoints
   contact: {
     // Protected API
     get: (req, res) => {
