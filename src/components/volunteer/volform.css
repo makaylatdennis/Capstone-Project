@@ -82,3 +82,62 @@
     background-color: #194a55;
 }
 
+
+@media(max-width: 420rem){
+    .vol-form{
+        margin-top: 5rem;
+    }
+}
+
+@media (max-width: 768px){
+
+    *{
+        font-size: 10px;
+       
+    }
+    .vol-form{
+        margin-top: 9rem;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .vol-input{
+        height: 1.5rem;
+    }
+
+    .vol-input2{
+        height: 1.5rem;
+    }
+
+    #first-last{
+        display: flex;
+        flex-direction: column;
+        width: 33rem;
+    }
+
+    #street-input{
+        width: 20rem;
+        height: 1.5rem;
+    }
+
+    .form-row{
+        display: flex;
+        flex-direction: column;
+        width: 33rem;
+    }
+
+    .input-box{
+        width: 30rem;
+        margin-bottom: 0;
+    }
+
+
+}
+
+@media (max-width: 820px){
+    .vol-form{
+        height: 50rem;
+        margin-top: 15rem;
+    }
+}
