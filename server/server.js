@@ -21,7 +21,7 @@ app.get("*", (req, res) => {
 });
 
 // API Endpoints
-app.post("/chatbot", chatbot.chatbot);
+// app.post("/chatbot", chatbot.chatbot);
 // user endpoints
 router.get("/users", DB.auth.verifyAdmin, DB.users.get); // Protected API
 router.get("/users/:id", DB.auth.verifyAdmin, DB.users.getByID);
