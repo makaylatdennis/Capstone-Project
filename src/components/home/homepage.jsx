@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './homepage.css';
 
-function Homepage(){
+function Homepage() {
+    const [activeIndex, setActiveIndex] = useState(null);
+
+    const toggleAccordion = (index) => {
+        setActiveIndex(activeIndex === index ? null : index);
+    };
+
     return (
         <section className="homepage-section">
             <div className="homepage-container">
@@ -13,7 +19,7 @@ function Homepage(){
                     <button className="home-button">Get Started</button>
                 </div>
                 <div className="homepage-image">
-                    <img src="/public/markus-spiske-4PG6wLlVag4-unsplash.jpg"/>
+                    <img src="/markus-spiske-4PG6wLlVag4-unsplash.jpg" alt="Green Beginnings"/>
                 </div>
             </div>
             <div className="svg-container">
@@ -27,7 +33,7 @@ function Homepage(){
 
             <div className="home-community">
                 <div id="community-img">
-                    <img src="/public/markus-spiske-sFydXGrt5OA-unsplash.jpg"/>
+                    <img src="/public/markus-spiske-sFydXGrt5OA-unsplash.jpg" alt="Community"/>
                 </div>
 
                 <div className="community-text">
@@ -39,43 +45,99 @@ function Homepage(){
 
             <div className="services-section">
                 <h1>Our Services</h1>
-                <ul>
-                    <li><strong>Planting and Gardening:</strong> From selecting the right plants to designing a sustainable garden, we offer expert advice and financial support. Our team of horticulturists will guide you through every step, ensuring your garden thrives in its environment. We also provide seasonal maintenance tips and workshops to help you become a gardening pro.</li>
-                    <li><strong>Outdoor Furniture:</strong> We help you choose and install outdoor furniture that fits your style and needs. Whether you're looking for a cozy patio set, a durable dining table, or stylish loungers, we have a wide range of options. Our experts will assist you in selecting materials that withstand the elements and complement your outdoor aesthetic.</li>
-                    <li><strong>Outdoor Kitchens:</strong> Transform your backyard into a culinary haven with our assistance in setting up outdoor kitchens. From selecting the right appliances to designing the layout, we ensure your outdoor kitchen is both functional and beautiful. Enjoy cooking and entertaining outdoors with our custom solutions tailored to your space and preferences.</li>
-                    <li><strong>Walkways and Pathways:</strong> Enhance the accessibility and aesthetics of your outdoor space with professionally designed walkways. Our landscape architects will create pathways that blend seamlessly with your garden, using materials like stone, brick, or gravel. We focus on both form and function, ensuring safe and attractive routes throughout your property.</li>
-                </ul>
+                <div className="accordion-item">
+                    <div className="accordion-title" onClick={() => toggleAccordion(0)}>
+                        <h2>Planting and Gardening</h2>
+                        <span>{activeIndex === 0 ? '-' : '+'}</span>
+                    </div>
+                    {activeIndex === 0 && (
+                        <div className="accordion-content">
+                            <p>From selecting the right plants to designing a sustainable garden, we offer expert advice and financial support. Our team of horticulturists will guide you through every step, ensuring your garden thrives in its environment. We also provide seasonal maintenance tips and workshops to help you become a gardening pro.</p>
+                        </div>
+                    )}
+                </div>
+                <div className="accordion-item">
+                    <div className="accordion-title" onClick={() => toggleAccordion(1)}>
+                        <h2>Outdoor Furniture</h2>
+                        <span>{activeIndex === 1 ? '-' : '+'}</span>
+                    </div>
+                    {activeIndex === 1 && (
+                        <div className="accordion-content">
+                            <p>We help you choose and install outdoor furniture that fits your style and needs. Whether you're looking for a cozy patio set, a durable dining table, or stylish loungers, we have a wide range of options. Our experts will assist you in selecting materials that withstand the elements and complement your outdoor aesthetic.</p>
+                        </div>
+                    )}
+                </div>
+                <div className="accordion-item">
+                    <div className="accordion-title" onClick={() => toggleAccordion(2)}>
+                        <h2>Outdoor Kitchens</h2>
+                        <span>{activeIndex === 2 ? '-' : '+'}</span>
+                    </div>
+                    {activeIndex === 2 && (
+                        <div className="accordion-content">
+                            <p>Transform your backyard into a culinary haven with our assistance in setting up outdoor kitchens. From selecting the right appliances to designing the layout, we ensure your outdoor kitchen is both functional and beautiful. Enjoy cooking and entertaining outdoors with our custom solutions tailored to your space and preferences.</p>
+                        </div>
+                    )}
+                </div>
+                <div className="accordion-item">
+                    <div className="accordion-title" onClick={() => toggleAccordion(3)}>
+                        <h2>Walkways and Pathways</h2>
+                        <span>{activeIndex === 3 ? '-' : '+'}</span>
+                    </div>
+                    {activeIndex === 3 && (
+                        <div className="accordion-content">
+                            <p>Enhance the accessibility and aesthetics of your outdoor space with professionally designed walkways. Our landscape architects will create pathways that blend seamlessly with your garden, using materials like stone, brick, or gravel. We focus on both form and function, ensuring safe and attractive routes throughout your property.</p>
+                        </div>
+                    )}
+                </div>
             </div>
 
             <div className="get-involved-section">
                 <h1>Get Involved</h1>
-                <p>Green Beginnings thrives on community support. We offer various ways for you to get involved:</p>
-                <ul>
-                    <li><strong>Volunteer:</strong> Join our team of dedicated volunteers who assist with installations and share their expertise with new homeowners. Volunteering with us is a great way to learn new skills, meet like-minded individuals, and contribute to creating beautiful outdoor spaces in our community.</li>
-                    <li><strong>Request Assistance:</strong> If you're a first-time homebuyer in need of help with your outdoor space, sign up to receive our support. We offer personalized consultations and hands-on assistance to help you create a garden or outdoor area that you can be proud of. Our goal is to make sustainable and beautiful outdoor living accessible to everyone.</li>
-                </ul>
-                <p>Together, we can create beautiful, sustainable, and welcoming outdoor spaces for everyone. Join us in making a difference in our community! Whether you're looking to volunteer, seek assistance, or simply learn more about gardening and outdoor design, Green Beginnings is here to support you every step of the way.</p>
+                <div className="accordion-item">
+                    <div className="accordion-title" onClick={() => toggleAccordion(4)}>
+                        <h2>Volunteer</h2>
+                        <span>{activeIndex === 4 ? '-' : '+'}</span>
+                    </div>
+                    {activeIndex === 4 && (
+                        <div className="accordion-content">
+                            <p>Join our team of dedicated volunteers who assist with installations and share their expertise with new homeowners. Volunteering with us is a great way to learn new skills, meet like-minded individuals, and contribute to creating beautiful outdoor spaces in our community.</p>
+                        </div>
+                    )}
+                </div>
+                <div className="accordion-item">
+                    <div className="accordion-title" onClick={() => toggleAccordion(5)}>
+                        <h2>Request Assistance</h2>
+                        <span>{activeIndex === 5 ? '-' : '+'}</span>
+                    </div>
+                    {activeIndex === 5 && (
+                        <div className="accordion-content">
+                            <p>If you're a first-time homebuyer in need of help with your outdoor space, sign up to receive our support. We offer personalized consultations and hands-on assistance to help you create a garden or outdoor area that you can be proud of. Our goal is to make sustainable and beautiful outdoor living accessible to everyone.</p>
+                        </div>
+                    )}
+                </div>
             </div>
 
             <div className="contact-section">
-    <h1>Contact Us</h1>
-    <p>We’d love to connect with you! If you have questions about our services, need assistance with your outdoor projects, or simply want to learn more about what we do, feel free to reach out. Our team is here to provide the support and information you need. Don’t hesitate to contact us for any inquiries or to share your feedback. .</p>
-    <div className="contact-info">
+                <h1>Contact Us</h1>
+                <p>We’d love to connect with you! If you have questions about our services, need assistance with your outdoor projects, or simply want to learn more about what we do, feel free to reach out. Our team is here to provide the support and information you need. Don’t hesitate to contact us for any inquiries or to share your feedback.</p>
+                <div className="contact-info">
                     <p><strong>Email:</strong> support@greenbeginnings.com</p>
                     <p><strong>Phone:</strong> (704) 123-4567</p>
                 </div>
-    <form className="contact-form">
-        <input type="text" placeholder="Your Name" required />
-        <input type="email" placeholder="Your Email" required />
-        <textarea placeholder="Your Message" required></textarea>
-        <button type="submit">Send Message</button>
-    </form>
-</div>
+                <form className="contact-form">
+                    <input type="text" placeholder="Your Name" required />
+                    <input type="email" placeholder="Your Email" required />
+                    <textarea placeholder="Your Message" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
         </section>
     );
 }
 
 export default Homepage;
+
+
 
 
 

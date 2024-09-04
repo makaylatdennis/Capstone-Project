@@ -9,6 +9,8 @@ import Application from "./components/application/application";
 // import NotFoundPage from './components/notfoundpage';
 import Chatbot from "./components/Chatbot";
 import Auth from "./components/Auth";
+import Admin from "./components/admin/adminapp.jsx";
+
 
 function App() {
   return (
@@ -18,8 +20,9 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/volunteer" element={<Volunteer />} />
         <Route path="/application" element={<Application />} />
-        <Route path="/Auth" element={<Auth />} />
+        <Route path="/auth" element={<Auth />} />
         {/* <Route path="/*" element={<NotFoundPage />} /> */}
+        <Route path="/admin" element={<Admin />} />
       </Routes>
         <Chatbot />
         <Footer />
