@@ -9,7 +9,7 @@ const cookie = {
     else return false;
   },
   get: function (cookie, name) {
-    if (!cookie) return null;
+    if (!cookie || !this.exists(cookie, name)) return null;
     return cookie
       .split(";")
       .find((e) => e.includes(name))
@@ -166,7 +166,7 @@ module.exports = {
     verifyAdmin: (req, res, next) => {
       const token = cookie.get(req.headers.cookie, "token");
       if (!token) {
-        return res.status(400).json({ message: "Please login" });
+        return res.status(400).redirect("/Auth");
       } else {
         const { email, password } = jwt.verify(token, process.env.SECRET_KEY);
         const queryPromise = callQuery(
@@ -179,7 +179,7 @@ module.exports = {
             if (results[0].role === "admin") {
               next();
             } else {
-              res.status(401).json({ message: "Unauthorized" });
+              res.status(401).redirect("/Auth");
             }
           }
         });
@@ -198,7 +198,6 @@ module.exports = {
 
       queryPromise.then((results) => {
         res.status(200).send(results);
-        console.log(results);
       });
 
       queryPromise.catch((err) => {
@@ -395,51 +394,25 @@ module.exports = {
       });
     },
     create: (req, res) => {
-      const { name, date, time, description } = req.body;
+      const { name, userID, date, time, description } = req.body;
 
       if (!name || !date || !time || !description) {
         res.status(400).json({ message: "Missing fields" });
         return;
       }
 
-      const token = cookie.get(req.headers.cookie, "token");
-
-      if (!token) {
-        return res.status(400).json({ message: "Please login" });
-      }
-
-      const { email, password } = jwt.verify(token, process.env.SECRET_KEY);
-
-      const userIDQuery = callQuery(
-        `SELECT id FROM users WHERE email = "${email}" AND password = "${password}"`
+      const queryPromise = callQuery(
+        `INSERT INTO events (name, userID, date, time, description, status) VALUES ("${name}", ${
+          !userID ? "null" : userID
+        }, '${date}', '${time}', "${description}", "approved")`
       );
-
-      userIDQuery.then((results) => {
-        if (results.length === 0) {
-          res.status(400).json({ message: "Invalid email or password" });
-          res.clearCookie("token");
-          return;
-        } else {
-          const userID = results[0].id;
-
-          const queryPromise = callQuery(
-            `INSERT INTO events (name, userID, date, time, description, status) VALUES ("${name}", ${userID}, ${date}, ${time}, "${description}, "approved")`
-          );
-          queryPromise.then((results) => {
-            res.status(200).send(results);
-          });
-
-          queryPromise.catch((err) => {
-            console.log(err);
-            res.status(500).send("Error creating events");
-          });
-        }
+      queryPromise.then((results) => {
+        res.status(200).send(results);
       });
 
-      userIDQuery.catch((err) => {
+      queryPromise.catch((err) => {
         console.log(err);
-        res.status(500).json({ message: "Internal server error" });
-        return;
+        res.status(500).send("Error creating events");
       });
     },
     getByUser: (req, res) => {
@@ -700,24 +673,19 @@ module.exports = {
         eventID,
       } = req.body;
 
-      if (
-        !firstName ||
-        !lastName ||
-        !email ||
-        !phone ||
-        !address ||
-        !city ||
-        !state ||
-        !zip
-      ) {
+      if (!firstName || !lastName || !email) {
         res.status(400).json({ message: "Missing fields" });
         return;
       }
 
       const queryPromise = callQuery(
-        `UPDATE volunteers SET firstName = "${firstName}", lastName = "${lastName}", email = "${email}", phone = "${phone}", address = "${address}", city = "${city}", state = "${state}", zip = "${zip}"${
-          !eventID ? "" : `, eventID = "${eventID}"`
-        } WHERE id = ${id}`
+        `UPDATE volunteers SET firstName = "${firstName}", lastName = "${lastName}", email = "${email}"${
+          !phone ? "null" : `, phone = "${phone}"`
+        }${!address ? "null" : `, address = "${address}"`}${
+          !city ? "null" : `, city = "${city}"`
+        }${!state ? "null" : `, state = "${state}"`}${
+          !zip ? "null" : `, zip = "${zip}"`
+        }${!eventID ? "null" : `, eventID = "${eventID}"`} WHERE id = ${id}`
       );
 
       queryPromise.then((results) => {
@@ -745,22 +713,17 @@ module.exports = {
       const { firstName, lastName, email, phone, address, zip, city, state } =
         req.body;
 
-      if (
-        !firstName ||
-        !lastName ||
-        !email ||
-        !phone ||
-        !address ||
-        !zip ||
-        !city ||
-        !state
-      ) {
+      if (!firstName || !lastName || !email) {
         res.status(400).json({ message: "Missing fields" });
         return;
       }
 
       const queryPromise = callQuery(
-        `INSERT INTO volunteers (firstName, lastName, email, phone, address, city, state, zip) VALUES ("${firstName}", "${lastName}", "${email}", "${phone}", "${address}", "${city}", "${state}", "${zip}")`
+        `INSERT INTO volunteers (firstName, lastName, email, phone, address, city, state, zip) VALUES ("${firstName}", "${lastName}", "${email}", ${
+          phone ? `"${phone}"` : "null"
+        }, ${address ? `"${address}"` : "null"}, ${
+          city ? `"${city}"` : "null"
+        }, ${state ? `"${state}"` : "null"}, ${zip ? `"${zip}"` : "null"})`
       );
 
       queryPromise.then((results) => {
@@ -781,7 +744,6 @@ module.exports = {
 
       queryPromise.then((results) => {
         res.status(200).send(results);
-        console.log(results);
       });
 
       queryPromise.catch((err) => {
