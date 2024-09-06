@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import './contactlist.css';
+import "./contactlist.css";
 
 const UpdatePopup = ({ contact, onUpdate, onCancel }) => {
   const LabelInput = ({ label, name, defaultValue }) => {
@@ -27,10 +27,7 @@ const UpdatePopup = ({ contact, onUpdate, onCancel }) => {
               }
             }
             console.log(updatedContact);
-            await axios.put(
-              `http://localhost:4000/api/contacts/${contact.id}`,
-              updatedContact
-            );
+            await axios.put(`/api/contacts/${contact.id}`, updatedContact);
             onUpdate();
           }}
         >
@@ -74,7 +71,7 @@ const ContactList = () => {
 
   const getContacts = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/contacts");
+      const response = await axios.get("/api/contacts");
       setContacts(response.data);
     } catch (error) {
       setError(error);
@@ -85,7 +82,7 @@ const ContactList = () => {
 
   const deleteContact = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/contact/${id}`);
+      await axios.delete(`/api/contact/${id}`);
       getContacts();
     } catch (error) {
       setError(error);
