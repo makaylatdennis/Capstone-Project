@@ -26,10 +26,34 @@ function Volform() {
         return isValidFirstName && isValidLastName && isValidEmail;
     }
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
         if (validateForm()) {
-            console.log('Form submitted successfully');
+            const formData = {
+                firstName: firstNameRef.current.value,
+                lastName: lastNameRef.current.value,
+                email: emailRef.current.value,
+            };
+    
+            try {
+                const response = await fetch('/api/volunteer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+    
+                if (response.ok) {
+                    console.log('Form submitted successfully');
+                   
+                } else {
+                    const errorResponse = await response.json();
+                    console.error(' Submission failed', errorResponse); 
+                }
+            } catch (error) {
+                console.error('Error submitting the form', error); 
+            }
         } else {
             console.log('Validation failed');
         }
