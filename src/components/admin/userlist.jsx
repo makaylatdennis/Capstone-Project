@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import './userlist.css';
 
 const UpdatePopup = ({ user, onUpdate, onCancel }) => {
   const LabelInput = ({ label, name, defaultValue }) => {
