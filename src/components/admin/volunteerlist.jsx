@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import './volunteerlist.css';
+import "./volunteerlist.css";
 
 const UpdatePopup = ({ volunteer, onUpdate, onCancel }) => {
   const LabelInput = ({ label, name, defaultValue }) => {
@@ -27,10 +27,7 @@ const UpdatePopup = ({ volunteer, onUpdate, onCancel }) => {
               }
             }
             console.log(updatedVolunteer);
-            await axios.put(
-              `http://localhost:4000/api/volunteer/${volunteer.id}`,
-              updatedVolunteer
-            );
+            await axios.put(`/api/volunteer/${volunteer.id}`, updatedVolunteer);
             onUpdate();
           }}
         >
@@ -74,7 +71,7 @@ const VolunteerList = () => {
 
   const getVolunteers = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/volunteer");
+      const response = await axios.get("/api/volunteer");
       setVolunteers(response.data);
     } catch (error) {
       setError(error);
@@ -85,7 +82,7 @@ const VolunteerList = () => {
 
   const deleteVolunteer = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/volunteer/${id}`);
+      await axios.delete(`/api/volunteer/${id}`);
       getVolunteers();
     } catch (error) {
       setError(error);
