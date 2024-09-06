@@ -82,7 +82,7 @@ const ContactList = () => {
 
   const deleteContact = async (id) => {
     try {
-      await axios.delete(`/api/contact/${id}`);
+      await axios.delete(`/api/contacts/${id}`);
       getContacts();
     } catch (error) {
       setError(error);

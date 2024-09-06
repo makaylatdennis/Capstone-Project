@@ -82,7 +82,7 @@ const UserList = () => {
 
   const deleteUser = async (id) => {
     try {
-      await axios.delete(`/api/user/${id}`);
+      await axios.delete(`/api/users/${id}`);
       getUsers();
     } catch (error) {
       setError(error);
