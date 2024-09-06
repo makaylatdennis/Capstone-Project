@@ -1,4 +1,4 @@
-.event-list {
+.application-list {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,11 +9,11 @@
     transition: transform 0.3s ease-in-out;
 }
 
-.event-list:hover {
+.application-list:hover {
     transform: scale(1.02);
 }
 
-.event-list h2 {
+.application-list h2 {
     color: rgb(88, 143, 134);
     font-size: 2em;
     font-weight: 700;
@@ -22,17 +22,17 @@
     transition: color 0.3s ease-in-out;
 }
 
-.event-list h2:hover {
+.application-list h2:hover {
     color: #558f2c;
 }
 
-.event-list ul {
+.application-list ul {
     list-style: none;
     padding: 0;
     width: 100%;
 }
 
-.event-list li {
+.application-list li {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -41,11 +41,11 @@
     transition: transform 0.3s ease-in-out;
 }
 
-.event-list li:hover {
+.application-list li:hover {
     transform: scale(1.02);
 }
 
-.event-list li h3 {
+.application-list li h3 {
     color: #2c3e50;
     font-size: 1.5em;
     font-weight: 700;
@@ -53,22 +53,14 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-.event-list li p {
+.application-list li p {
     color: #2c3e50;
     font-size: 1.2em;
     font-family: 'Lato', sans-serif;
     margin-bottom: 10px;
 }
 
-.button-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.event-list button {
+.application-list button {
     background-color: rgb(208, 150, 96);
     color: white;
     border: none;
@@ -78,9 +70,10 @@
     cursor: pointer;
     text-transform: uppercase;
     transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    margin-right: 10px;
 }
 
-.event-list button:hover {
+.application-list button:hover {
     background-color: #558f2c;
     transform: scale(1.1);
 }
@@ -151,3 +144,10 @@
     transform: scale(1.1);
 }
 
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
