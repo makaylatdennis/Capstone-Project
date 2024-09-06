@@ -16,6 +16,10 @@ app.use(express.json());
 app.use("/api", router);
 app.use(cors()); // Allow requests from different origins
 
+app.get("/admin", DB.auth.verifyAdmin, (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
@@ -49,7 +53,7 @@ router.put("/events/reject/:id", DB.auth.verifyAdmin, DB.events.reject);
 router.post("/events", DB.auth.verifyAdmin, DB.events.create);
 router.delete("/events/:id", DB.auth.verifyAdmin, DB.events.delete);
 
-router.get("/events", DB.auth.verify, DB.events.get);
+router.get("/events", DB.auth.verify, DB.events.get); // Open API // Public
 router.get("/events/user", DB.auth.verify, DB.events.getByUser);
 
 // application endpoints

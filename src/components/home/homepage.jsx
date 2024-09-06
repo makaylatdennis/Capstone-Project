@@ -33,7 +33,7 @@ function Homepage() {
 
             <div className="home-community">
                 <div id="community-img">
-                    <img src="/public/markus-spiske-sFydXGrt5OA-unsplash.jpg" alt="Community"/>
+                    <img src="/markus-spiske-sFydXGrt5OA-unsplash.jpg" alt="Community"/>
                 </div>
 
                 <div className="community-text">
