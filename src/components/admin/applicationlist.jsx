@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import './applicationlist.css';
 
 const UpdatePopup = ({ application, onUpdate, onCancel }) => {
   const LabelInput = ({ label, name, defaultValue }) => {
@@ -178,6 +179,7 @@ const ApplicationList = () => {
             onCancel={() => setShowRejectPopup(false)}
           />
         )}
+        <div className="button-container">
         <button onClick={getApplications}>Refresh</button>
         <button
           onClick={() => {
@@ -211,6 +213,7 @@ const ApplicationList = () => {
         >
           getAll
         </button>
+        </div>
         <ul>
           {applications.map((application) => (
             <li key={application.id}>

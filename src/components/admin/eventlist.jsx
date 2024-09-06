@@ -287,6 +287,7 @@ const EventList = () => {
             onCancel={() => setShowCreatePopup(false)}
           />
         )}
+        <div className="button-container">
         <button onClick={getEvents}>Refresh</button>
         <button
           onClick={() => {
@@ -323,6 +324,7 @@ const EventList = () => {
         {!showCreatePopup && (
           <button onClick={() => setShowCreatePopup(true)}>Create</button>
         )}
+        </div>
         <ul>
           {events.map((event) => (
             <li key={event.id}>
