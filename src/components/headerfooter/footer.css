@@ -105,6 +105,25 @@ footer .row {
 
 #footer2 ul {
     margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+#footer2 ul{
+    margin-bottom: 1rem;
+}
+
+#footer2 a{
+    text-decoration: none;
+    color: white;
+    margin-bottom: 2rem;
+}
+
+#footer li{
+    margin-bottom: 2rem;
+}
+
+.footer-link{
+    margin-bottom: 1rem;
 }
 
 * {

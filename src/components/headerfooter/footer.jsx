@@ -1,5 +1,6 @@
 import React from 'react';
 import './footer.css'; 
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
@@ -34,9 +35,9 @@ function Footer() {
                     <div className="footer-col" id="footer2">
                         <h4>Quick Links</h4>
                         <ul>
-                            <li><p>Home </p></li>
-                            <li><p>Volunteer</p></li>
-                            <li><p>Request Services</p></li>
+                            <li className='footer-link'><Link to='/'>Home</Link></li>
+                            <li className='footer-link'><Link to='/volunteer'>Volunteer</Link></li>
+                            <li className='footer-link'><Link to='application'>Request Services</Link></li>
                             <li><p>Partners</p></li>
                             <li><p>Sign In</p></li>
                         </ul>

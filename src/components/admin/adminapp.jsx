@@ -1,90 +1,90 @@
-// import React, { useEffect, useState } from 'react';
-// import UserList from './components/userlist';
-// import ContactList from './components/contactlist';
-// import './admin.css';
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+// import UserList from "./userlist";
+// import ContactList from "./contactlist";
+// import EventList from "./eventlist";
+// import VolunteerList from "./volunteerlist";
+// import ApplicationList from "./applicationlist";
+// import "./admin.css";
 
 // const AdminApp = () => {
-//     const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
-//     useEffect(() => {
-//       axios.post('http://localhost:4000/api/login', {
-//         email: 'Admin@gmail.com',
-//         password: 'AdminPass',
-//       }).then(response => {
-//         if (response.status === 200) {
-//           setIsAuthenticated(true);
-//         }
-//       }).catch(error => console.error(error));
-//     }, []);
-  
-//     if (!isAuthenticated) {
-//       return <div>Loading...</div>;
-//     }
-  
-//     return (
-//       <div>
-//         <h1>Admin Dashboard</h1>
+//   return (
+//     <div className="admin-dashboard">
+//       <h1>Admin Dashboard</h1>
+//       <div className="dashboard-section">
 //         <UserList />
+//       </div>
+//       <div className="dashboard-section">
 //         <ContactList />
 //       </div>
-//     );
-//   };
-  
-//   export default AdminApp;
+//       <div className="dashboard-section">
+//         <EventList />
+//       </div>
+//       <div className="dashboard-section">
+//         <VolunteerList />
+//       </div>
+//       <div className="dashboard-section">
+//         <ApplicationList />
+//       </div>
+//     </div>
+//   );
+// };
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import UserList from './userlist';
-import ContactList from './contactlist';
-import EventList from './eventlist';
-import VolunteerList from './volunteerlist';
-import './admin.css';
+//export default AdminApp;
+
+import React, { useState } from "react";
+import UserList from "./userlist";
+import ContactList from "./contactlist";
+import EventList from "./eventlist";
+import VolunteerList from "./volunteerlist";
+import ApplicationList from "./applicationlist";
+import "./admin.css";
 
 const AdminApp = () => {
-    // const [isAuthenticated, setIsAuthenticated] = useState(false);
-    // const [loading, setLoading] = useState(true);
 
-    // useEffect(() => {
-    //     axios.post('http://localhost:4000/api/login', {
-    //         email: 'admin@gmail.com',
-    //         password: 'admin',
-    //     }).then(response => {
-    //         if (response.status === 200) {
-    //             setIsAuthenticated(true);
-    //         }
-    //     }).catch(error => console.error(error))
-    //       .finally(() => setLoading(false));
-    // }, []);
+    const [selectedComponent, setSelectedComponent] = useState("UserList");
 
-    // if (loading) {
-    //     return <div>Loading...</div>;
-    // }
+    const renderComponent = () => {
+      switch (selectedComponent) {
+        case "UserList":
+          return <UserList />;
+        case "ContactList":
+          return <ContactList />;
+        case "EventList":
+          return <EventList />;
+        case "VolunteerList":
+          return <VolunteerList />;
+        case "ApplicationList":
+          return <ApplicationList />;
+        // default:
+        //   return <UserList />;
+      }
+    };
 
-    // if (!isAuthenticated) {
-    //     return <div>Authentication failed. Please check your credentials.</div>;
-    // }
+  return (
 
-    return (
-        <div className="admin-dashboard">
-            <h1>Admin Dashboard</h1>
-            <div className="dashboard-section">
-                <h2>Users</h2>
-                <UserList />
-            </div>
-            <div className="dashboard-section">
-                <h2>Contacts</h2>
-                <ContactList />
-            </div>
-            <div className="dashboard-section">
-                <h2>Events</h2>
-                <EventList />
-            </div>
-            <div className="dashboard-section">
-                <h2>Volunteers</h2>
-                <VolunteerList />
-            </div>
-        </div>
-    );
+    <div className="admin-dashboard">
+      <h1>Admin Dashboard</h1>
+      <div className="dropdown">
+        <select
+          value={selectedComponent}
+          onChange={(e) => setSelectedComponent(e.target.value)}
+        >
+          <option value="UserList">User List</option>
+          <option value="ContactList">Contact List</option>
+          <option value="EventList">Event List</option>
+          <option value="VolunteerList">Volunteer List</option>
+          <option value="ApplicationList">Application List</option>
+        </select>
+      </div>
+      <div className="dashboard-section">{renderComponent()}</div>
+    </div>
+  );
 };
 
 export default AdminApp;
+
+
+
+
+

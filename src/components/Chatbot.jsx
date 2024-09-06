@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import './Chatbot.css';
+import React, { useState, useRef } from "react";
+import "./Chatbot.css";
 
 const Chatbot = () => {
   // State to control if the chatbot is open or closed
@@ -38,15 +38,15 @@ const Chatbot = () => {
     
     // Store the user's message and reset the input field
     const userMessage = userInput.trim();
-    setMessages([...messages, { role: 'user', content: userMessage }]);
-    setUserInput('');
+    setMessages([...messages, { role: "user", content: userMessage }]);
+    setUserInput("");
 
     try {
       // Make a POST request to the server with the user's message
       const response = await fetch('http://localhost:4000/chatbot', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ choice: userMessage }),
       });
@@ -61,20 +61,20 @@ const Chatbot = () => {
 
       // Check if a reply was received from the server
       if (!data.reply) {
-        throw new Error('No reply found in response');
+        throw new Error("No reply found in response");
       }
 
       // Add the bot's reply to the messages array
       setMessages((prevMessages) => [
         ...prevMessages,
-        { role: 'bot', content: data.reply },
+        { role: "bot", content: data.reply },
       ]);
     } catch (error) {
       // Handle any errors and display a message in case of failure
       console.error('Error:', error);
       setMessages((prevMessages) => [
         ...prevMessages,
-        { role: 'bot', content: 'Sorry, something went wrong.' },
+        { role: "bot", content: "Sorry, something went wrong." },
       ]);
     } finally {
       setLoading(false); // Set loading to false when the process is complete
@@ -109,7 +109,7 @@ const Chatbot = () => {
               <div
                 key={index}
                 className={`chatbot-message ${
-                  msg.role === 'user' ? 'user-message' : 'bot-message'
+                  msg.role === "user" ? "user-message" : "bot-message"
                 }`}
               >
                 {msg.content} {/* The actual message content */}
