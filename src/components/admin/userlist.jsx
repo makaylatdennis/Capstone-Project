@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import './userlist.css';
+import "./userlist.css";
 
 const UpdatePopup = ({ user, onUpdate, onCancel }) => {
   const LabelInput = ({ label, name, defaultValue }) => {
@@ -27,10 +27,7 @@ const UpdatePopup = ({ user, onUpdate, onCancel }) => {
               }
             }
             console.log(updatedUser);
-            await axios.put(
-              `http://localhost:4000/api/users/${user.id}`,
-              updatedUser
-            );
+            await axios.put(`/api/users/${user.id}`, updatedUser);
             onUpdate();
           }}
         >
@@ -74,7 +71,7 @@ const UserList = () => {
 
   const getUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/users");
+      const response = await axios.get("/api/users");
       setUsers(response.data);
     } catch (error) {
       setError(error);
@@ -85,7 +82,7 @@ const UserList = () => {
 
   const deleteUser = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/user/${id}`);
+      await axios.delete(`/api/user/${id}`);
       getUsers();
     } catch (error) {
       setError(error);

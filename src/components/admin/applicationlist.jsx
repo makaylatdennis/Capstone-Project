@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import './applicationlist.css';
 
 const UpdatePopup = ({ application, onUpdate, onCancel }) => {
   const LabelInput = ({ label, name, defaultValue }) => {
@@ -27,7 +28,7 @@ const UpdatePopup = ({ application, onUpdate, onCancel }) => {
             }
             console.log(updatedApplication);
             await axios.put(
-              `http://localhost:4000/api/applications/${application.id}`,
+              `/api/applications/${application.id}`,
               updatedApplication
             );
             onUpdate();
@@ -89,7 +90,7 @@ const ApplicationList = () => {
   const getApplications = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/api/applications${!getBy ? "" : `/${getBy}`}`
+        `/api/applications${!getBy ? "" : `/${getBy}`}`
       );
       setApplications(response.data);
     } catch (error) {
@@ -101,7 +102,7 @@ const ApplicationList = () => {
 
   const deleteApplication = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/applications/${id}`);
+      await axios.delete(`/api/applications/${id}`);
       getApplications();
     } catch (error) {
       setError(error);
@@ -111,9 +112,9 @@ const ApplicationList = () => {
   const approve_rejectApplication = async (id, approve) => {
     try {
       if (approve) {
-        await axios.put(`http://localhost:4000/api/applications/approve/${id}`);
+        await axios.put(`/api/applications/approve/${id}`);
       } else {
-        await axios.put(`http://localhost:4000/api/applications/reject/${id}`);
+        await axios.put(`/api/applications/reject/${id}`);
       }
       getApplications();
     } catch (error) {
@@ -178,6 +179,7 @@ const ApplicationList = () => {
             onCancel={() => setShowRejectPopup(false)}
           />
         )}
+        <div className="button-container">
         <button onClick={getApplications}>Refresh</button>
         <button
           onClick={() => {
@@ -211,6 +213,7 @@ const ApplicationList = () => {
         >
           getAll
         </button>
+        </div>
         <ul>
           {applications.map((application) => (
             <li key={application.id}>

@@ -28,7 +28,7 @@ const UpdatePopup = ({ event, onUpdate, onCancel }) => {
             }
             console.log(updatedEvent);
             await axios.put(
-              `http://localhost:4000/api/events/${event.id}`,
+              `/api/events/${event.id}`,
               updatedEvent
             );
             onUpdate();
@@ -107,7 +107,7 @@ const CreatePopup = ({ onCreate, onCancel }) => {
               }
             }
             console.log(newEvent);
-            await axios.post(`http://localhost:4000/api/events`, newEvent);
+            await axios.post(`/api/events`, newEvent);
             onCreate();
           }}
         >
@@ -162,7 +162,7 @@ const EventList = () => {
   const getEvents = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/api/events${!getBy ? "" : `/${getBy}`}`
+        `/api/events${!getBy ? "" : `/${getBy}`}`
       );
       setEvents(response.data);
     } catch (error) {
@@ -174,7 +174,7 @@ const EventList = () => {
 
   const deleteEvent = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/events/${id}`);
+      await axios.delete(`/api/events/${id}`);
       getEvents();
     } catch (error) {
       setError(error);
@@ -184,9 +184,9 @@ const EventList = () => {
   const approve_rejectEvent = async (id, approve) => {
     try {
       if (approve) {
-        await axios.put(`http://localhost:4000/api/events/approve/${id}`);
+        await axios.put(`/api/events/approve/${id}`);
       } else {
-        await axios.put(`http://localhost:4000/api/events/reject/${id}`);
+        await axios.put(`/api/events/reject/${id}`);
       }
       getEvents();
     } catch (error) {
@@ -287,6 +287,7 @@ const EventList = () => {
             onCancel={() => setShowCreatePopup(false)}
           />
         )}
+        <div className="button-container">
         <button onClick={getEvents}>Refresh</button>
         <button
           onClick={() => {
@@ -323,6 +324,7 @@ const EventList = () => {
         {!showCreatePopup && (
           <button onClick={() => setShowCreatePopup(true)}>Create</button>
         )}
+        </div>
         <ul>
           {events.map((event) => (
             <li key={event.id}>
