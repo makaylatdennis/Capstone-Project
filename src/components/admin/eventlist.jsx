@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import './eventlist.css';
 
 const LabelInput = ({ label, name, defaultValue, type }) => {
   return (

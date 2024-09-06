@@ -1,0 +1,145 @@
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffffee;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.contact-list:hover {
+    transform: scale(1.02);
+}
+
+.contact-list h2 {
+    color: rgb(88, 143, 134);
+    font-size: 2em;
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+    transition: color 0.3s ease-in-out;
+}
+
+.contact-list h2:hover {
+    color: #558f2c;
+}
+
+.contact-list ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+.contact-list li {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.contact-list li:hover {
+    transform: scale(1.02);
+}
+
+.contact-list li h3 {
+    color: #2c3e50;
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.contact-list li p {
+    color: #2c3e50;
+    font-size: 1.2em;
+    font-family: 'Lato', sans-serif;
+    margin-bottom: 10px;
+}
+
+.contact-list button {
+    background-color: rgb(208, 150, 96);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    margin-right: 10px;
+}
+
+.contact-list button:hover {
+    background-color: #558f2c;
+    transform: scale(1.1);
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffffee;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.popup-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.popup-inner h2 {
+    color: rgb(88, 143, 134);
+    font-size: 2em;
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.popup-inner form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.popup-inner label {
+    color: #2c3e50;
+    font-size: 1.2em;
+    font-family: 'Lato', sans-serif;
+    margin-bottom: 10px;
+}
+
+.popup-inner input {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Lato', sans-serif;
+    font-size: 1em;
+}
+
+.popup-inner button {
+    background-color: rgb(208, 150, 96);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    margin-right: 10px;
+}
+
+.popup-inner button:hover {
+    background-color: #558f2c;
+    transform: scale(1.1);
+}
