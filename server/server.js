@@ -40,15 +40,16 @@ router.post("/login", DB.auth.login); // Open API // Server Only // Zero Auth
 router.post("/logout", DB.auth.verify, DB.auth.logout);
 
 // event endpoints
-router.get("/events/:id", DB.auth.verifyAdmin, DB.events.getByID); // Protected API
 
-router.get("/events/approved", DB.auth.verifyAdmin, DB.events.getApproved);
+router.get("/events/approved", DB.auth.verifyAdmin, DB.events.getApproved); // Protected API
 router.get("/events/pending", DB.auth.verifyAdmin, DB.events.getPending);
 router.get("/events/rejected", DB.auth.verifyAdmin, DB.events.getRejected);
 
-router.put("/events/:id", DB.auth.verifyAdmin, DB.events.update);
+router.get("/events/:id", DB.auth.verifyAdmin, DB.events.getByID); // Last as to not conflict with other routes
+
 router.put("/events/approve/:id", DB.auth.verifyAdmin, DB.events.approve);
 router.put("/events/reject/:id", DB.auth.verifyAdmin, DB.events.reject);
+router.put("/events/:id", DB.auth.verifyAdmin, DB.events.update);
 
 router.post("/events", DB.auth.verifyAdmin, DB.events.create);
 router.delete("/events/:id", DB.auth.verifyAdmin, DB.events.delete);
@@ -58,11 +59,12 @@ router.get("/events/user", DB.auth.verify, DB.events.getByUser);
 
 // application endpoints
 router.get("/applications", DB.auth.verifyAdmin, DB.app.get); // Protected API
-router.get("/applications/:id", DB.auth.verifyAdmin, DB.app.getByID);
 
 router.get("/applications/approved", DB.auth.verifyAdmin, DB.app.getApproved);
 router.get("/applications/pending", DB.auth.verifyAdmin, DB.app.getPending);
 router.get("/applications/rejected", DB.auth.verifyAdmin, DB.app.getRejected);
+
+router.get("/applications/:id", DB.auth.verifyAdmin, DB.app.getByID); // Last as to not conflict with other routes
 
 router.put("/applications/approve/:id", DB.auth.verifyAdmin, DB.app.approve);
 router.put("/applications/reject/:id", DB.auth.verifyAdmin, DB.app.reject);
