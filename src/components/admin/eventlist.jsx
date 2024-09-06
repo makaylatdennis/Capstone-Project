@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import './eventlist.css';
+import "./eventlist.css";
 
 const LabelInput = ({ label, name, defaultValue, type }) => {
   return (
@@ -155,6 +155,7 @@ const EventList = () => {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [showApprovePopup, setShowApprovePopup] = useState(false);
   const [showCreatePopup, setShowCreatePopup] = useState(false);
+  const [showRejectPopup, setShowRejectPopup] = useState(false);
   const [error, setError] = useState(null);
   const [getBy, setGetBy] = useState("");
 
@@ -173,7 +174,7 @@ const EventList = () => {
 
   const deleteEvent = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/event/${id}`);
+      await axios.delete(`http://localhost:4000/api/events/${id}`);
       getEvents();
     } catch (error) {
       setError(error);
@@ -183,9 +184,9 @@ const EventList = () => {
   const approve_rejectEvent = async (id, approve) => {
     try {
       if (approve) {
-        await axios.put(`http://localhost:4000/api/event/approve/${id}`);
+        await axios.put(`http://localhost:4000/api/events/approve/${id}`);
       } else {
-        await axios.put(`http://localhost:4000/api/event/reject/${id}`);
+        await axios.put(`http://localhost:4000/api/events/reject/${id}`);
       }
       getEvents();
     } catch (error) {
@@ -266,6 +267,17 @@ const EventList = () => {
             onCancel={() => setShowApprovePopup(false)}
           />
         )}
+        {showRejectPopup && (
+          <ApprovePopup
+            event={showRejectPopup}
+            onApprove={() => {
+              console.log(showRejectPopup.id);
+              approve_rejectEvent(showRejectPopup.id, false);
+              setShowRejectPopup(false);
+            }}
+            onCancel={() => setShowRejectPopup(false)}
+          />
+        )}
         {showCreatePopup && (
           <CreatePopup
             onCreate={() => {
@@ -319,6 +331,7 @@ const EventList = () => {
               <p>Date: {formatDate(event.date)}</p>
               <p>Time: {formatTime(event.time)}</p>
               <p>Description: {event.description}</p>
+              <p>Status: {event.status}</p>
               {!showUpdatePopup && (
                 <button onClick={() => setShowUpdatePopup(event)}>
                   Update
@@ -335,7 +348,7 @@ const EventList = () => {
                 </button>
               )}
               {!showApprovePopup && (
-                <button onClick={() => setShowApprovePopup(event)}>
+                <button onClick={() => setShowRejectPopup(event)}>
                   Reject
                 </button>
               )}

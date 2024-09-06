@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { i } from "vite/dist/node/types.d-aGj9QkWt";
 
 const UpdatePopup = ({ application, onUpdate, onCancel }) => {
   const LabelInput = ({ label, name, defaultValue }) => {
@@ -83,6 +82,7 @@ const ApplicationList = () => {
   const [showUpdatePopup, setShowUpdatePopup] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [showApprovePopup, setShowApprovePopup] = useState(false);
+  const [showRejectPopup, setShowRejectPopup] = useState(false);
   const [error, setError] = useState(null);
   const [getBy, setGetBy] = useState("");
 
@@ -101,7 +101,7 @@ const ApplicationList = () => {
 
   const deleteApplication = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/application/${id}`);
+      await axios.delete(`http://localhost:4000/api/applications/${id}`);
       getApplications();
     } catch (error) {
       setError(error);
@@ -111,9 +111,9 @@ const ApplicationList = () => {
   const approve_rejectApplication = async (id, approve) => {
     try {
       if (approve) {
-        await axios.put(`http://localhost:4000/api/application/approve/${id}`);
+        await axios.put(`http://localhost:4000/api/applications/approve/${id}`);
       } else {
-        await axios.put(`http://localhost:4000/api/application/reject/${id}`);
+        await axios.put(`http://localhost:4000/api/applications/reject/${id}`);
       }
       getApplications();
     } catch (error) {
@@ -165,6 +165,17 @@ const ApplicationList = () => {
               setShowApprovePopup(false);
             }}
             onCancel={() => setShowApprovePopup(false)}
+          />
+        )}
+        {showRejectPopup && (
+          <ApprovePopup
+            application={showRejectPopup}
+            onApprove={() => {
+              console.log(showRejectPopup.id);
+              approve_rejectApplication(showRejectPopup.id, false);
+              setShowRejectPopup(false);
+            }}
+            onCancel={() => setShowRejectPopup(false)}
           />
         )}
         <button onClick={getApplications}>Refresh</button>
@@ -227,7 +238,7 @@ const ApplicationList = () => {
                 </button>
               )}
               {!showApprovePopup && (
-                <button onClick={() => setShowApprovePopup(application)}>
+                <button onClick={() => setShowRejectPopup(application)}>
                   Reject
                 </button>
               )}
