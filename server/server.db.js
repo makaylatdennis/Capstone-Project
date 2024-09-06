@@ -222,7 +222,7 @@ module.exports = {
       const id = req.params.id;
       const { name, role, email, password } = req.body;
 
-      if (role !== "admin" && role !== "user" && role !== "provider") {
+      if (role !== "admin" && role !== "user") {
         res.status(400).json({ message: "Invalid role" });
         return;
       }
@@ -362,13 +362,15 @@ module.exports = {
       const id = req.params.id;
       const { name, email, phone, date, time, description } = req.body;
 
-      if (!name || !email || !phone || !date || !time || !description) {
+      console.log(name, email, date, time, description);
+
+      if (!name || !date || !time || !description) {
         res.status(400).json({ message: "Missing fields" });
         return;
       }
 
       const queryPromise = callQuery(
-        `UPDATE events SET name = "${name}", email = "${email}", phone = ${phone}, date = ${date}, time = ${time}, description = ${description} WHERE id = ${id}`
+        `UPDATE events SET name = "${name}", date = '${date}', time = '${time}', description = "${description}" WHERE id = ${id}`
       );
 
       queryPromise.then((results) => {
@@ -467,9 +469,8 @@ module.exports = {
       });
     },
     getApproved: (req, res) => {
-      const queryPromise = callQuery(
-        "SELECT * FROM applications WHERE status = 'approved'"
-      );
+      const str = "SELECT * FROM applications WHERE status = 'approved'";
+      const queryPromise = callQuery(str);
 
       queryPromise.then((results) => {
         res.status(200).send(results);
