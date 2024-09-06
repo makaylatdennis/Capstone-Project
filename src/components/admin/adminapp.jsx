@@ -39,36 +39,41 @@ import EventList from "./eventlist";
 import VolunteerList from "./volunteerlist";
 import ApplicationList from "./applicationlist";
 import "./admin.css";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const AdminApp = () => {
+  const [selectedComponent, setSelectedComponent] = useState(
+    useLocation().pathname.split("/")[2]
+  );
+  const url = useLocation().pathname.split("/")[2];
+  const navigate = useNavigate();
 
-    const [selectedComponent, setSelectedComponent] = useState("UserList");
-
-    const renderComponent = () => {
-      switch (selectedComponent) {
-        case "UserList":
-          return <UserList />;
-        case "ContactList":
-          return <ContactList />;
-        case "EventList":
-          return <EventList />;
-        case "VolunteerList":
-          return <VolunteerList />;
-        case "ApplicationList":
-          return <ApplicationList />;
-        // default:
-        //   return <UserList />;
-      }
-    };
+  const renderComponent = () => {
+    switch (url) {
+      case "UserList":
+        return <UserList />;
+      case "ContactList":
+        return <ContactList />;
+      case "EventList":
+        return <EventList />;
+      case "VolunteerList":
+        return <VolunteerList />;
+      case "ApplicationList":
+        return <ApplicationList />;
+      // default:
+      //   return <UserList />;
+    }
+  };
 
   return (
-
     <div className="admin-dashboard">
       <h1>Admin Dashboard</h1>
       <div className="dropdown">
         <select
-          value={selectedComponent}
-          onChange={(e) => setSelectedComponent(e.target.value)}
+          value={url}
+          onChange={(e) => {
+            window.location.replace(`/admin/${e.target.value}`);
+          }}
         >
           <option value="UserList">User List</option>
           <option value="ContactList">Contact List</option>
@@ -83,8 +88,3 @@ const AdminApp = () => {
 };
 
 export default AdminApp;
-
-
-
-
-
