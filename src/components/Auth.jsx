@@ -44,7 +44,7 @@ const Auth = () => {
       .then((data) => {
         if (isLogin) {
           setSubmitted("Logged In");
-          navigate('/dashboard'); // Redirect to dashboard or homepage after login
+          navigate('/'); // Redirect to dashboard or homepage after login
         } else {
           setSubmitted("Signed Up Successfully!");
           // Reset form fields after successful signup
