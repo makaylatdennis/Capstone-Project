@@ -20,18 +20,18 @@ const Auth = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     const url = isLogin ? "/api/login" : "/api/signup"; // Determine API endpoint
     const payload = isLogin
       ? { email, password } // Login payload
       : { name, email, password }; // Signup payload
-
+  
     const option = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     };
-
+  
     fetch(url, option)
       .then((res) => {
         if (!res.ok) {
@@ -44,7 +44,7 @@ const Auth = () => {
       .then((data) => {
         if (isLogin) {
           setSubmitted("Logged In");
-          navigate(data.redirect); // Redirect on successful login
+          navigate('/dashboard'); // Redirect to dashboard or homepage after login
         } else {
           setSubmitted("Signed Up Successfully!");
           // Reset form fields after successful signup
@@ -58,14 +58,24 @@ const Auth = () => {
         console.error(err.message);
       });
   };
+  
 
   return (
     <div className="auth-page">
       <div className="auth-container">
-        <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
+        <div className="auth-header">
+          <h2>{isLogin ? 'Welcome Back' : 'Join Green Beginnings'}</h2>
+          <p className="auth-tagline">
+            {isLogin 
+              ? 'Secure your access to exclusive services and updates.'
+              : 'Start your journey with us and make a difference.'}
+          </p>
+        </div>
+
         {submitted && !isLogin && (
           <p className="success-message">{submitted}</p> // Show success message for signup
         )}
+
         <form onSubmit={handleSubmit} className="auth-form">
           {!isLogin && (
             <div className="form-group">
@@ -75,6 +85,7 @@ const Auth = () => {
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your full name"
                 required
               />
             </div>
@@ -86,6 +97,7 @@ const Auth = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
               required
             />
           </div>
@@ -96,19 +108,36 @@ const Auth = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
               required
             />
           </div>
+
           <button type="submit" className="auth-button">
             {isLogin ? 'Login' : 'Sign Up'}
           </button>
+
+          {/* Additional security or importance message */}
+          {isLogin && (
+            <div className="security-notice">
+              <p>Your login information is secure.</p>
+              <p><strong>We take privacy seriously.</strong></p>
+            </div>
+          )}
         </form>
-        <p className="toggle-text">
-          {isLogin ? "Don't have an account?" : 'Already have an account?'}
-          <button type="button" onClick={toggleForm} className="toggle-button">
-            {isLogin ? 'Sign Up' : 'Login'}
-          </button>
-        </p>
+
+        <div className="auth-extra">
+          <p className="toggle-text">
+            {isLogin ? "Don't have an account?" : 'Already have an account?'}
+            <button type="button" onClick={toggleForm} className="toggle-button">
+              {isLogin ? 'Sign Up' : 'Login'}
+            </button>
+          </p>
+
+          <div className="auth-reminder">
+            <p>New here? Creating an account is easy and takes less than a minute.</p>
+          </div>
+        </div>
       </div>
     </div>
   );

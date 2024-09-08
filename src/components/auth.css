@@ -1,88 +1,141 @@
-  .auth-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #F5F5F5;
-  }
-  
-  .auth-container {
-    width: 100%;
-    max-width: 400px;
-    background-color: #f0e6d2; /* Off-white color */
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .auth-container h2 {
-    color: rgb(88, 143, 134);
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .auth-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    margin-bottom: 5px;
-    color: rgb(88, 143, 134); 
-  }
-  
-  .form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    background-color: #f5f0e6; /* Light brown color */
-    color: #3e2a1d; /* Dark brown text color */
-  }
-  
-  .auth-button {
-    padding: 10px;
-    background-color: #3e2a1d; /* Dark brown color */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .auth-button:hover {
-    background-color: #2f6030; 
-  }
-  
-  .toggle-text {
-    text-align: center;
-    margin-top: 15px;
-    color: #3e2a1d; /* Dark brown color */
-  }
-  
-  .toggle-button {
-    background: none;
-    border: none;
-    color: #c39e6f; /* Light brown color */
-    cursor: pointer;
-    font-size: 16px;
-    margin-left: 5px;
-  }
-  
-  .toggle-button:hover {
-    color: rgb(88, 143, 134); 
-  }
-  
-  .success-message {
-    color: rgb(88, 143, 134); 
-    text-align: center;
-    margin-bottom: 15px;
-    font-weight: bold;
-  }
-  
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #F5F5F5;
+  padding: 20px;
+  transition: background-color 0.4s ease-in-out;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 550px; 
+  background-color: rgb(255, 255, 255);
+  padding: 50px; 
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  position: relative;
+  text-align: center;
+}
+
+.auth-container:hover {
+  transform: scale(1.01);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+}
+
+.auth-header {
+  margin-bottom: 30px;
+}
+
+.auth-header h2 {
+  color: rgb(88, 143, 134);
+  margin-bottom: 10px;
+  font-size: 3rem; /* Larger font size */
+  font-family: 'Playfair Display', serif; /* Elegant font */
+}
+
+.auth-tagline {
+  font-size: 1.4rem; /* Larger tagline */
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-family: 'Playfair Display', serif; /* Elegant font */
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  color: rgb(88, 143, 134);
+  font-size: 1.1rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: rgb(255, 255, 255);
+  color: #3e2a1d;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: rgb(88, 143, 134);
+  outline: none;
+  box-shadow: 0 0 6px rgba(88, 143, 134, 0.5);
+}
+
+.auth-button {
+  padding: 14px;
+  background-color:  rgb(88, 143, 134);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.auth-button:hover {
+  background-color: #2f6030;
+  transform: scale(1.05);
+}
+
+.security-notice {
+  margin-top: 20px;
+  font-size: 1.1rem; /* Larger font */
+  color: #3e2a1d;
+  font-family: 'Playfair Display', serif; /* Elegant font */
+}
+
+.auth-extra {
+  margin-top: 30px;
+}
+
+.toggle-text {
+  font-size: 1.2rem; /* Larger font */
+  color: #3e2a1d;
+}
+
+.toggle-button {
+  background: none;
+  border: none;
+  color: #c39e6f;
+  cursor: pointer;
+  font-size: 1.2rem; /* Larger font */
+  margin-left: 5px;
+  transition: color 0.3s ease;
+}
+
+.toggle-button:hover {
+  color: rgb(88, 143, 134);
+  transform: scale(1.05);
+}
+
+.success-message {
+  color: rgb(88, 143, 134);
+  font-weight: bold;
+  font-size: 1.4rem; /* Larger font */
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 15px;
+}
+
+.auth-reminder {
+  font-size: 1.1rem;
+  color: #2c3e50;
+  margin-top: 10px;
+  font-family: 'Playfair Display', serif; /* Elegant font */
+}
