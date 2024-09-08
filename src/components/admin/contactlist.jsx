@@ -124,7 +124,7 @@ const ContactList = () => {
             onCancel={() => setShowDeletePopup(false)}
           />
         )}
-        <button onClick={getContacts}>Refresh</button>
+        <button onClick={getContacts} className="resfresh">Refresh</button>
         <ul>
           {contacts.map((contact) => (
             <li key={contact.id}>

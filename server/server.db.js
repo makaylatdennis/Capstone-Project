@@ -146,7 +146,7 @@ module.exports = {
           );
           const admin = results[0].role === "admin";
           res
-            .cookie("token", token, { httpOnly: true })
+            .cookie("token", token, { httpOnly: false })
             .status(200)
             .json({
               message: "Logged In",
@@ -161,12 +161,12 @@ module.exports = {
     },
     logout: (req, res) => {
       res.clearCookie("token");
-      res.status(200).json({ message: "Logged Out", redirect: "/login" });
+      res.status(200).redirect("/login");
     },
     verifyAdmin: (req, res, next) => {
       const token = cookie.get(req.headers.cookie, "token");
       if (!token) {
-        return res.status(400).redirect("/Auth");
+        return res.status(400).redirect("/login");
       } else {
         const { email, password } = jwt.verify(token, process.env.SECRET_KEY);
         const queryPromise = callQuery(
@@ -179,7 +179,7 @@ module.exports = {
             if (results[0].role === "admin") {
               next();
             } else {
-              res.status(401).redirect("/Auth");
+              res.status(401).redirect("/login");
             }
           }
         });
