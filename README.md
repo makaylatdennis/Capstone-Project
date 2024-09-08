@@ -34,10 +34,9 @@ Ensure you have the following installed on your machine:
 - [Git](https://git-scm.com/)
 
 ### 1. Clone the Repository
-
-```bash
 git clone (https://github.com/makaylatdennis/Capstone-Project.git)
 cd Capstone-project
+
 
 ### 2. Install Dependencies
 npm install
