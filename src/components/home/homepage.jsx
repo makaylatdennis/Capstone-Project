@@ -16,7 +16,7 @@ function Homepage() {
                     <h1>GREEN BEGINNINGS</h1>
                     <h2 className="blossom">Where new beginnings blossom</h2>
                     <h2 className="elevate">Elevate your home today - Let your outdoor dreams take root with us!</h2>
-                    <button className="home-button">Get Started</button>
+                    <button className="home-button"><Link to="/application" className="applynow-no-visited">Get Started</Link></button>
                 </div>
                 <div className="homepage-image">
                     <img src="/markus-spiske-4PG6wLlVag4-unsplash.jpg" alt="Green Beginnings"/>

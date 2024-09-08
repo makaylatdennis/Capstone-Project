@@ -7,6 +7,8 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
+    width: 75%;
+    margin: 0 auto;
 }
 
 .user-list:hover {
@@ -142,4 +144,8 @@
 .popup-inner button:hover {
     background-color: #558f2c;
     transform: scale(1.1);
+}
+
+.refresh {
+    margin-bottom: 1.5rem;
 }

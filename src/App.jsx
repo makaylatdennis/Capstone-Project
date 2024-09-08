@@ -19,7 +19,7 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/volunteer" element={<Volunteer />} />
         <Route path="/application" element={<Application />} />
-        <Route path="/auth" element={<Auth />} />
+        <Route path="/login" element={<Auth />} />
         {/* <Route path="/*" element={<NotFoundPage />} /> */}
         <Route path="/admin/*" element={<Admin />} />
       </Routes>
