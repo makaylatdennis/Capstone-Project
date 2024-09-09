@@ -161,9 +161,15 @@ module.exports = {
     },
     logout: (req, res) => {
       res.clearCookie("token");
-      res.status(200).redirect("/login");
+      res.status(200).json({ message: "Logged Out", redirect: "/login" });
     },
     verifyAdmin: (req, res, next) => {
+      console.log(req.url);
+      if (req.url.substring(0, 6) !== "/admin") {
+        next();
+        return;
+      }
+
       const token = cookie.get(req.headers.cookie, "token");
       if (!token) {
         return res.status(400).redirect("/login");
@@ -220,7 +226,7 @@ module.exports = {
     },
     update: (req, res) => {
       const id = req.params.id;
-      const { name, role, email, password } = req.body;
+      const { name, role, email, password, api_key } = req.body;
 
       if (role !== "admin" && role !== "user") {
         res.status(400).json({ message: "Invalid role" });
@@ -232,7 +238,7 @@ module.exports = {
       }
 
       const queryPromise = callQuery(
-        `UPDATE users SET name = "${name}", role = "${role}", email = "${email}", password = "${password}" WHERE id = ${id}`
+        `UPDATE users SET name = "${name}", role = "${role}", email = "${email}", password = "${password}", api_key = "${api_key}" WHERE id = ${id}`
       );
 
       queryPromise.then((results) => {

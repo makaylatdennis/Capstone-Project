@@ -16,15 +16,7 @@ app.use(express.json());
 app.use("/api", router);
 app.use(cors()); // Allow requests from different origins
 
-app.get("/admin", DB.auth.verifyAdmin, (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
-});
-
-app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
-});
-
-app.get("*", (req, res) => {
+app.get("*", DB.auth.verifyAdmin, (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
