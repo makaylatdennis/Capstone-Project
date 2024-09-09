@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UserList from "./userlist";
 import ContactList from "./contactlist";
 import EventList from "./eventlist";
@@ -8,6 +8,7 @@ import "./admin.css";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const AdminApp = () => {
+  const [isAdmin, setIsAdmin] = useState(null);
   const [selectedComponent, setSelectedComponent] = useState(
     useLocation().pathname.split("/")[2]
   );
@@ -31,7 +32,33 @@ const AdminApp = () => {
     }
   };
 
-  return (
+  const checkAdmin = () => {
+    const option = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    fetch("/api/checkAdmin", option)
+      .then((res) => {
+        if (res.status === 401 || res.status === 400) {
+          setIsAdmin(false);
+        } else if (res.status === 200) {
+          setIsAdmin(true);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    checkAdmin();
+  }, [isAdmin]);
+
+  return isAdmin ? (
     <div className="admin-dashboard">
       <h1>Admin Dashboard</h1>
       <div className="dropdown">
@@ -50,6 +77,12 @@ const AdminApp = () => {
       </div>
       <div className="dashboard-section">{renderComponent()}</div>
     </div>
+  ) : isAdmin === false ? (
+    <div>
+      <h1>Access Denied</h1>
+    </div>
+  ) : (
+    <div>Checking Access...</div>
   );
 };
 
