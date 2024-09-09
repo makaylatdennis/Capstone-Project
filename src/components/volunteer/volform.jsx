@@ -34,7 +34,7 @@ function Volform() {
                 lastName: lastNameRef.current.value,
                 email: emailRef.current.value,
             };
-    
+
             try {
                 const response = await fetch('/api/volunteer', {
                     method: 'POST',
@@ -43,13 +43,13 @@ function Volform() {
                     },
                     body: JSON.stringify(formData),
                 });
-    
+
                 if (response.ok) {
+                    alert('Your application has been successfully submitted!');
                     console.log('Form submitted successfully');
-                   
                 } else {
                     const errorResponse = await response.json();
-                    console.error(' Submission failed', errorResponse); 
+                    console.error('Submission failed', errorResponse); 
                 }
             } catch (error) {
                 console.error('Error submitting the form', error); 
@@ -137,5 +137,5 @@ function Volform() {
         </div>
     );
 }
-// testing
+
 export default Volform;
