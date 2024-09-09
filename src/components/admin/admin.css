@@ -1,59 +1,37 @@
-.admin-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #ffffffee;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .admin-container:hover {
-    transform: scale(1.02);
-  }
-  
-  .admin-container h1 {
-    color: rgb(88, 143, 134);
+  h1 {
+    color: #2c3e50;
     font-size: 2.5em;
     font-weight: 700;
     margin-bottom: 20px;
     font-family: 'Montserrat', sans-serif;
     transition: color 0.3s ease-in-out;
+    text-align: center;
   }
-  
-  .admin-container h1:hover {
-    color: #558f2c;
-  }
-  
-  .user-list, .contact-list {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-  
-  .user-list h2, .contact-list h2 {
-    color: rgb(88, 143, 134);
-    font-size: 2em;
-    font-weight: 700;
-    margin-bottom: 15px;
-    font-family: 'Montserrat', sans-serif;
-    transition: color 0.3s ease-in-out;
-  }
-  
-  .user-list h2:hover, .contact-list h2:hover {
-    color: #558f2c;
-  }
-  
-  .user-list ul, .contact-list ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .user-list li, .contact-list li {
-    margin-bottom: 10px;
-    font-size: 1.1em;
-    line-height: 1.6;
-    font-family: 'Lato', sans-serif;
-    color: #2c3e50;
-  }
-  
+
+  h1:hover {
+    color: rgb(208, 150, 96);
+}
+
+.dropdown {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.dropdown select {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #2c3e50;
+  border-radius: 5px;
+  background-color: #ecf0f1;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.dropdown select:hover {
+  background-color: #bdc3c7;
+}
+
+.dashboard-section {
+  margin-top: 20px;
+}
+
+

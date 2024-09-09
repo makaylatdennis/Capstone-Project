@@ -9,7 +9,7 @@ const cookie = {
     else return false;
   },
   get: function (cookie, name) {
-    if (!cookie) return null;
+    if (!cookie || !this.exists(cookie, name)) return null;
     return cookie
       .split(";")
       .find((e) => e.includes(name))
@@ -146,7 +146,7 @@ module.exports = {
           );
           const admin = results[0].role === "admin";
           res
-            .cookie("token", token, { httpOnly: true })
+            .cookie("token", token, { httpOnly: false })
             .status(200)
             .json({
               message: "Logged In",
@@ -164,9 +164,15 @@ module.exports = {
       res.status(200).json({ message: "Logged Out", redirect: "/login" });
     },
     verifyAdmin: (req, res, next) => {
+      console.log(req.url);
+      if (req.url.substring(0, 6) !== "/admin") {
+        next();
+        return;
+      }
+
       const token = cookie.get(req.headers.cookie, "token");
       if (!token) {
-        return res.status(400).json({ message: "Please login" });
+        return res.status(400).redirect("/login");
       } else {
         const { email, password } = jwt.verify(token, process.env.SECRET_KEY);
         const queryPromise = callQuery(
@@ -179,7 +185,7 @@ module.exports = {
             if (results[0].role === "admin") {
               next();
             } else {
-              res.status(401).json({ message: "Unauthorized" });
+              res.status(401).redirect("/login");
             }
           }
         });
@@ -198,7 +204,6 @@ module.exports = {
 
       queryPromise.then((results) => {
         res.status(200).send(results);
-        console.log(results);
       });
 
       queryPromise.catch((err) => {
@@ -221,9 +226,9 @@ module.exports = {
     },
     update: (req, res) => {
       const id = req.params.id;
-      const { name, role, email, password } = req.body;
+      const { name, role, email, password, api_key } = req.body;
 
-      if (role !== "admin" && role !== "user" && role !== "provider") {
+      if (role !== "admin" && role !== "user") {
         res.status(400).json({ message: "Invalid role" });
         return;
       }
@@ -233,7 +238,7 @@ module.exports = {
       }
 
       const queryPromise = callQuery(
-        `UPDATE users SET name = "${name}", role = "${role}", email = "${email}", password = "${password}" WHERE id = ${id}`
+        `UPDATE users SET name = "${name}", role = "${role}", email = "${email}", password = "${password}", api_key = "${api_key}" WHERE id = ${id}`
       );
 
       queryPromise.then((results) => {
@@ -363,13 +368,15 @@ module.exports = {
       const id = req.params.id;
       const { name, email, phone, date, time, description } = req.body;
 
-      if (!name || !email || !phone || !date || !time || !description) {
+      console.log(name, email, date, time, description);
+
+      if (!name || !date || !time || !description) {
         res.status(400).json({ message: "Missing fields" });
         return;
       }
 
       const queryPromise = callQuery(
-        `UPDATE events SET name = "${name}", email = "${email}", phone = ${phone}, date = ${date}, time = ${time}, description = ${description} WHERE id = ${id}`
+        `UPDATE events SET name = "${name}", date = '${date}', time = '${time}', description = "${description}" WHERE id = ${id}`
       );
 
       queryPromise.then((results) => {
@@ -395,51 +402,25 @@ module.exports = {
       });
     },
     create: (req, res) => {
-      const { name, date, time, description } = req.body;
+      const { name, userID, date, time, description } = req.body;
 
       if (!name || !date || !time || !description) {
         res.status(400).json({ message: "Missing fields" });
         return;
       }
 
-      const token = cookie.get(req.headers.cookie, "token");
-
-      if (!token) {
-        return res.status(400).json({ message: "Please login" });
-      }
-
-      const { email, password } = jwt.verify(token, process.env.SECRET_KEY);
-
-      const userIDQuery = callQuery(
-        `SELECT id FROM users WHERE email = "${email}" AND password = "${password}"`
+      const queryPromise = callQuery(
+        `INSERT INTO events (name, userID, date, time, description, status) VALUES ("${name}", ${
+          !userID ? "null" : userID
+        }, '${date}', '${time}', "${description}", "approved")`
       );
-
-      userIDQuery.then((results) => {
-        if (results.length === 0) {
-          res.status(400).json({ message: "Invalid email or password" });
-          res.clearCookie("token");
-          return;
-        } else {
-          const userID = results[0].id;
-
-          const queryPromise = callQuery(
-            `INSERT INTO events (name, userID, date, time, description, status) VALUES ("${name}", ${userID}, ${date}, ${time}, "${description}, "approved")`
-          );
-          queryPromise.then((results) => {
-            res.status(200).send(results);
-          });
-
-          queryPromise.catch((err) => {
-            console.log(err);
-            res.status(500).send("Error creating events");
-          });
-        }
+      queryPromise.then((results) => {
+        res.status(200).send(results);
       });
 
-      userIDQuery.catch((err) => {
+      queryPromise.catch((err) => {
         console.log(err);
-        res.status(500).json({ message: "Internal server error" });
-        return;
+        res.status(500).send("Error creating events");
       });
     },
     getByUser: (req, res) => {
@@ -494,9 +475,8 @@ module.exports = {
       });
     },
     getApproved: (req, res) => {
-      const queryPromise = callQuery(
-        "SELECT * FROM applications WHERE status = 'approved'"
-      );
+      const str = "SELECT * FROM applications WHERE status = 'approved'";
+      const queryPromise = callQuery(str);
 
       queryPromise.then((results) => {
         res.status(200).send(results);
@@ -700,24 +680,19 @@ module.exports = {
         eventID,
       } = req.body;
 
-      if (
-        !firstName ||
-        !lastName ||
-        !email ||
-        !phone ||
-        !address ||
-        !city ||
-        !state ||
-        !zip
-      ) {
+      if (!firstName || !lastName || !email) {
         res.status(400).json({ message: "Missing fields" });
         return;
       }
 
       const queryPromise = callQuery(
-        `UPDATE volunteers SET firstName = "${firstName}", lastName = "${lastName}", email = "${email}", phone = "${phone}", address = "${address}", city = "${city}", state = "${state}", zip = "${zip}"${
-          !eventID ? "" : `, eventID = "${eventID}"`
-        } WHERE id = ${id}`
+        `UPDATE volunteers SET firstName = "${firstName}", lastName = "${lastName}", email = "${email}"${
+          !phone ? "null" : `, phone = "${phone}"`
+        }${!address ? "null" : `, address = "${address}"`}${
+          !city ? "null" : `, city = "${city}"`
+        }${!state ? "null" : `, state = "${state}"`}${
+          !zip ? "null" : `, zip = "${zip}"`
+        }${!eventID ? "null" : `, eventID = "${eventID}"`} WHERE id = ${id}`
       );
 
       queryPromise.then((results) => {
@@ -745,22 +720,17 @@ module.exports = {
       const { firstName, lastName, email, phone, address, zip, city, state } =
         req.body;
 
-      if (
-        !firstName ||
-        !lastName ||
-        !email ||
-        !phone ||
-        !address ||
-        !zip ||
-        !city ||
-        !state
-      ) {
+      if (!firstName || !lastName || !email) {
         res.status(400).json({ message: "Missing fields" });
         return;
       }
 
       const queryPromise = callQuery(
-        `INSERT INTO volunteers (firstName, lastName, email, phone, address, city, state, zip) VALUES ("${firstName}", "${lastName}", "${email}", "${phone}", "${address}", "${city}", "${state}", "${zip}")`
+        `INSERT INTO volunteers (firstName, lastName, email, phone, address, city, state, zip) VALUES ("${firstName}", "${lastName}", "${email}", ${
+          phone ? `"${phone}"` : "null"
+        }, ${address ? `"${address}"` : "null"}, ${
+          city ? `"${city}"` : "null"
+        }, ${state ? `"${state}"` : "null"}, ${zip ? `"${zip}"` : "null"})`
       );
 
       queryPromise.then((results) => {
@@ -781,7 +751,6 @@ module.exports = {
 
       queryPromise.then((results) => {
         res.status(200).send(results);
-        console.log(results);
       });
 
       queryPromise.catch((err) => {
