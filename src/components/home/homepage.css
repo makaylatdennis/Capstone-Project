@@ -222,6 +222,9 @@
     text-align: center;
     margin-top: 5%;
     transition: transform 0.3s ease-in-out;
+    width: 75%;
+    margin: 0 auto;
+    margin-top: 5%;
 }
 
 .contact-section:hover {
@@ -247,39 +250,6 @@
     font-family: 'Lato', sans-serif;
     color: #2c3e50;
     margin-bottom: 30px;
-}
-
-.contact-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.contact-form input, .contact-form textarea {
-    width: 80%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-family: 'Lato', sans-serif;
-    font-size: 1em;
-}
-
-.contact-form button {
-    background-color: rgb(208, 150, 96);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 1.5rem;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-.contact-form button:hover {
-    background-color: #558f2c;
-    transform: scale(1.1);
 }
 
 .contact-info {
@@ -327,6 +297,72 @@
     color: #2c3e50;
     line-height: 1.6;
 }
+
+.team-title {
+    color: rgb(88, 143, 134);
+    margin-top: 5%;
+}
+
+.team-title:hover {
+    color: #558f2c;
+}
+
+.carousel-container {
+    width: 100%;
+    overflow: hidden;
+    background-color: #ffffffee;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    position: relative;
+  }
+  
+  .carousel-track {
+    display: flex;
+    animation: scroll 20s linear infinite;
+    margin-top: 5%;
+  }
+  
+  .carousel-item {
+    flex: 0 0 25%; /* Adjust this value to change the number of visible items */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .carousel-item:hover {
+    transform: scale(1.05);
+  }
+  
+  .team-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .team-name {
+    color: rgb(88, 143, 134);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2em;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }  
 
 @media (max-width: 768px) {
     .homepage-container {
