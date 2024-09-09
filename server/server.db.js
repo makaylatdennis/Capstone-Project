@@ -709,13 +709,13 @@ module.exports = {
 
       const queryPromise = callQuery(
         `UPDATE volunteers SET firstName = "${firstName}", lastName = "${lastName}", email = "${email}"${
-          !phone ? `phone = null` : `, phone = "${phone}"`
-        }${!address ? `address = null` : `, address = "${address}"`}${
-          !city ? `city = null` : `, city = "${city}"`
-        }${!state ? `state = null` : `, state = "${state}"`}${
-          !zip ? `zip = null` : `, zip = "${zip}"`
+          !phone ? `, phone = null` : `, phone = "${phone}"`
+        }${!address ? `, address = null` : `, address = "${address}"`}${
+          !city ? `, city = null` : `, city = "${city}"`
+        }${!state ? `, state = null` : `, state = "${state}"`}${
+          !zip ? `, zip = null` : `, zip = "${zip}"`
         }${
-          !eventID ? `eventID = null` : `, eventID = "${eventID}"`
+          !eventID ? `, eventID = null` : `, eventID = "${eventID}"`
         } WHERE id = ${id}`
       );
 
