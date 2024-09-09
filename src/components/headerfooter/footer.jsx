@@ -79,6 +79,40 @@ function Footer() {
               </li>
             </ul>
           </div>
+          <div className="footer-col" id="footer2">
+            <h4>Quick Links</h4>
+            <ul>
+              <li className="footer-link">
+                <Link to="/">Home</Link>
+              </li>
+              <li className="footer-link">
+                <Link to="/volunteer">Volunteer</Link>
+              </li>
+              <li className="footer-link">
+                <Link to="application">Request Services</Link>
+              </li>
+              <li>
+                <p>Partners</p>
+              </li>
+              <li>
+                <p>Sign In</p>
+              </li>
+            </ul>
+          </div>
+          <div className="footer-col" id="footer2">
+            <h4>Customer Service</h4>
+            <ul>
+              <li>
+                <p>Contact Us</p>
+              </li>
+              <li>
+                <p>FAQ</p>
+              </li>
+              <li>
+                <p>Partners</p>
+              </li>
+            </ul>
+          </div>
 
           <div className="footer-col" id="footer3">
             <h4>Legal</h4>
