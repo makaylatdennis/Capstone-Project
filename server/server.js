@@ -6,7 +6,7 @@ const app = express();
 const router = express.Router();
 const port = process.env.PORT || 4000;
 
-const DB = require("./server.db"); // this is for database connection and verification
+const DB = require("./server.DB"); // this is for database connection and verification
 const cors = require("cors");
 const chatbot = require("./server.chatbot");
 
@@ -16,14 +16,14 @@ app.use(express.json());
 app.use("/api", router);
 app.use(cors()); // Allow requests from different origins
 
-app.get("*", DB.auth.verifyAdmin, (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
 // API Endpoints
 
 // chatbot endpoint
-router.post("/chatbot", chatbot.chatbot);
+app.post("/chatbot", chatbot.chatbot);
 
 // user endpoints
 router.get("/users", DB.auth.verifyAdmin, DB.users.get); // Protected API
@@ -36,31 +36,29 @@ router.post("/login", DB.auth.login); // Open API // Server Only // Zero Auth
 router.post("/logout", DB.auth.verify, DB.auth.logout);
 
 // event endpoints
+router.get("/events/:id", DB.auth.verifyAdmin, DB.events.getByID); // Protected API
 
-router.get("/events/approved", DB.auth.verifyAdmin, DB.events.getApproved); // Protected API
+router.get("/events/approved", DB.auth.verifyAdmin, DB.events.getApproved);
 router.get("/events/pending", DB.auth.verifyAdmin, DB.events.getPending);
 router.get("/events/rejected", DB.auth.verifyAdmin, DB.events.getRejected);
 
-router.get("/events/:id", DB.auth.verifyAdmin, DB.events.getByID); // Last as to not conflict with other routes
-
+router.put("/events/:id", DB.auth.verifyAdmin, DB.events.update);
 router.put("/events/approve/:id", DB.auth.verifyAdmin, DB.events.approve);
 router.put("/events/reject/:id", DB.auth.verifyAdmin, DB.events.reject);
-router.put("/events/:id", DB.auth.verifyAdmin, DB.events.update);
 
 router.post("/events", DB.auth.verifyAdmin, DB.events.create);
 router.delete("/events/:id", DB.auth.verifyAdmin, DB.events.delete);
 
-router.get("/events", DB.auth.verify, DB.events.get); // Open API // Public
+router.get("/events", DB.auth.verify, DB.events.get);
 router.get("/events/user", DB.auth.verify, DB.events.getByUser);
 
 // application endpoints
 router.get("/applications", DB.auth.verifyAdmin, DB.app.get); // Protected API
+router.get("/applications/:id", DB.auth.verifyAdmin, DB.app.getByID);
 
 router.get("/applications/approved", DB.auth.verifyAdmin, DB.app.getApproved);
 router.get("/applications/pending", DB.auth.verifyAdmin, DB.app.getPending);
 router.get("/applications/rejected", DB.auth.verifyAdmin, DB.app.getRejected);
-
-router.get("/applications/:id", DB.auth.verifyAdmin, DB.app.getByID); // Last as to not conflict with other routes
 
 router.put("/applications/approve/:id", DB.auth.verifyAdmin, DB.app.approve);
 router.put("/applications/reject/:id", DB.auth.verifyAdmin, DB.app.reject);
@@ -87,4 +85,4 @@ router.post("/contacts", DB.auth.verify, DB.contact.create); // Open API // Serv
 
 app.listen(port, () => {
   console.log(`Server is running on port http://localhost:${port}`);
-});
+})
