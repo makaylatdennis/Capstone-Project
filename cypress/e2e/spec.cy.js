@@ -1,24 +1,3 @@
-// describe("template spec", () => {
-//   before(() => {
-//     cy.visit("http://localhost:4000");
-//     cy.request("POST", "http://localhost:4000/api/signup", {
-//       name: "Root Admin",
-//       email: "admin5@gmail.com",
-//       password: "adminPass",
-//       role: "user",
-//     });
-//   });
-
-//   it("passes", () => {
-//     cy.request("POST", "http://localhost:4000/api/login", {
-//       email: "admin2@gmail.com",
-//       password: "adminPass",
-//     }).then((response) => {
-//       expect(response.status).to.eq(200);
-//     });
-//   });
-// });
-
 describe("auth endpoint tests", () => {
   before(() => {
     Cypress.Cookies.debug(true);
@@ -182,6 +161,72 @@ describe("auth endpoint tests", () => {
 
     // delete contact test
     cy.request("DELETE", "http://localhost:4000/api/contacts/1", {}).then(
+      (response) => {
+        expect(response.status).to.eq(200);
+        cy.log(response.body);
+      }
+    );
+
+    // logout test
+    cy.request("POST", "http://localhost:4000/api/logout", {}).then(
+      (response) => {
+        expect(response.status).to.eq(200);
+      }
+    );
+  });
+
+  it("admin volunteers test", () => {
+    cy.visit("http://localhost:4000");
+
+    // login test
+    cy.request("POST", "http://localhost:4000/api/login", {
+      email: "AdminChanged@gmail.com",
+      password: "AdminPass",
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+    });
+
+    // create volunteer test
+    cy.request("POST", "http://localhost:4000/api/volunteer", {
+      firstName: "Test",
+      lastName: "Volunteer",
+      email: "testVolunteer@gmail.com",
+      phone: "123-456-7890",
+    });
+
+    cy.request("POST", "http://localhost:4000/api/volunteer", {
+      firstName: "Test",
+      lastName: "Volunteer",
+      email: "test2Volunteer@gmail.com",
+      phone: "000-000-0000",
+    });
+
+    // get volunteers test
+    cy.request("GET", "http://localhost:4000/api/volunteer", {}).then(
+      (response) => {
+        expect(response.status).to.eq(200);
+        cy.log(response.body);
+      }
+    );
+
+    // get volunteer by id test
+    cy.request("GET", "http://localhost:4000/api/volunteer/1", {}).then(
+      (response) => {
+        expect(response.status).to.eq(200);
+        cy.log(response.body);
+      }
+    );
+
+    // update volunteer test
+    cy.request("PUT", "http://localhost:4000/api/volunteer/1", {
+      firstName: "Updated",
+      lastName: "Volunteer",
+      email: "UpdateVolunteer@gmail.com",
+      phone: "123-456-7890",
+    });
+
+    // delete volunteer test
+    cy.request("DELETE", "http://localhost:4000/api/volunteer/1", {}).then(
       (response) => {
         expect(response.status).to.eq(200);
         cy.log(response.body);

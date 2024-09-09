@@ -27,10 +27,7 @@ const UpdatePopup = ({ event, onUpdate, onCancel }) => {
               }
             }
             console.log(updatedEvent);
-            await axios.put(
-              `/api/events/${event.id}`,
-              updatedEvent
-            );
+            await axios.put(`/api/events/${event.id}`, updatedEvent);
             onUpdate();
           }}
         >
@@ -221,7 +218,9 @@ const EventList = () => {
       .padStart(2, "0")}:${seconds.toString().padStart(2, "0")} ${period}`;
   }
 
-  useEffect(() => getEvents(), []);
+  useEffect(() => {
+    getEvents();
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -288,42 +287,42 @@ const EventList = () => {
           />
         )}
         <div className="button-container">
-        <button onClick={getEvents}>Refresh</button>
-        <button
-          onClick={() => {
-            setGetBy("pending");
-            getEvents();
-          }}
-        >
-          getPending
-        </button>
-        <button
-          onClick={() => {
-            setGetBy("approved");
-            getEvents();
-          }}
-        >
-          getApproved
-        </button>
-        <button
-          onClick={() => {
-            setGetBy("rejected");
-            getEvents();
-          }}
-        >
-          getRejected
-        </button>
-        <button
-          onClick={() => {
-            setGetBy("");
-            getEvents();
-          }}
-        >
-          getAll
-        </button>
-        {!showCreatePopup && (
-          <button onClick={() => setShowCreatePopup(true)}>Create</button>
-        )}
+          <button onClick={getEvents}>Refresh</button>
+          <button
+            onClick={() => {
+              setGetBy("pending");
+              getEvents();
+            }}
+          >
+            getPending
+          </button>
+          <button
+            onClick={() => {
+              setGetBy("approved");
+              getEvents();
+            }}
+          >
+            getApproved
+          </button>
+          <button
+            onClick={() => {
+              setGetBy("rejected");
+              getEvents();
+            }}
+          >
+            getRejected
+          </button>
+          <button
+            onClick={() => {
+              setGetBy("");
+              getEvents();
+            }}
+          >
+            getAll
+          </button>
+          {!showCreatePopup && (
+            <button onClick={() => setShowCreatePopup(true)}>Create</button>
+          )}
         </div>
         <ul>
           {events.map((event) => (
