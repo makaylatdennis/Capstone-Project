@@ -161,12 +161,14 @@ module.exports = {
     },
     logout: (req, res) => {
       res.clearCookie("token");
-      res.status(200).redirect("/login");
+      res.status(200).json({ message: "Logged Out", redirect: "/login" });
     },
     verifyAdmin: (req, res, next) => {
       const token = cookie.get(req.headers.cookie, "token");
       if (!token) {
-        return res.status(400).redirect("/login");
+        return res
+          .status(400)
+          .json({ message: "Please login", redirect: "/login" });
       } else {
         const { email, password } = jwt.verify(token, process.env.SECRET_KEY);
         const queryPromise = callQuery(
@@ -179,7 +181,33 @@ module.exports = {
             if (results[0].role === "admin") {
               next();
             } else {
-              res.status(401).redirect("/login");
+              res.status(401).json({ message: "Unauthorized", redirect: "/" });
+            }
+          }
+        });
+        queryPromise.catch((err) => {
+          console.log(err);
+          res.status(500).json({ message: "Internal server error" });
+        });
+      }
+    },
+    checkAdmin: (req, res) => {
+      const token = cookie.get(req.headers.cookie, "token");
+      if (!token) {
+        return res.status(400).json({ message: "Please login" });
+      } else {
+        const { email, password } = jwt.verify(token, process.env.SECRET_KEY);
+        const queryPromise = callQuery(
+          `SELECT * FROM users WHERE email = "${email}" AND password = "${password}"`
+        );
+        queryPromise.then((results) => {
+          if (results.length === 0) {
+            res.status(400).json({ message: "Invalid email or password" });
+          } else {
+            if (results[0].role === "admin") {
+              res.status(200).json({ message: "Admin" });
+            } else {
+              res.status(401).json({ message: "User" });
             }
           }
         });
@@ -220,7 +248,7 @@ module.exports = {
     },
     update: (req, res) => {
       const id = req.params.id;
-      const { name, role, email, password } = req.body;
+      const { name, role, email, password, api_key } = req.body;
 
       if (role !== "admin" && role !== "user") {
         res.status(400).json({ message: "Invalid role" });
@@ -232,7 +260,7 @@ module.exports = {
       }
 
       const queryPromise = callQuery(
-        `UPDATE users SET name = "${name}", role = "${role}", email = "${email}", password = "${password}" WHERE id = ${id}`
+        `UPDATE users SET name = "${name}", role = "${role}", email = "${email}", password = "${password}", api_key = "${api_key}" WHERE id = ${id}`
       );
 
       queryPromise.then((results) => {
@@ -681,12 +709,14 @@ module.exports = {
 
       const queryPromise = callQuery(
         `UPDATE volunteers SET firstName = "${firstName}", lastName = "${lastName}", email = "${email}"${
-          !phone ? "null" : `, phone = "${phone}"`
-        }${!address ? "null" : `, address = "${address}"`}${
-          !city ? "null" : `, city = "${city}"`
-        }${!state ? "null" : `, state = "${state}"`}${
-          !zip ? "null" : `, zip = "${zip}"`
-        }${!eventID ? "null" : `, eventID = "${eventID}"`} WHERE id = ${id}`
+          !phone ? `, phone = null` : `, phone = "${phone}"`
+        }${!address ? `, address = null` : `, address = "${address}"`}${
+          !city ? `, city = null` : `, city = "${city}"`
+        }${!state ? `, state = null` : `, state = "${state}"`}${
+          !zip ? `, zip = null` : `, zip = "${zip}"`
+        }${
+          !eventID ? `, eventID = null` : `, eventID = "${eventID}"`
+        } WHERE id = ${id}`
       );
 
       queryPromise.then((results) => {

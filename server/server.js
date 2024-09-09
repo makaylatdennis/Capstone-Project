@@ -16,14 +16,6 @@ app.use(express.json());
 app.use("/api", router);
 app.use(cors()); // Allow requests from different origins
 
-app.get("/admin", DB.auth.verifyAdmin, (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
-});
-
-app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
-});
-
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
@@ -42,6 +34,7 @@ router.delete("/users/:id", DB.auth.verifyAdmin, DB.users.delete);
 router.post("/signup", DB.auth.signup); // Open API // Server Only // Zero Auth
 router.post("/login", DB.auth.login); // Open API // Server Only // Zero Auth
 router.post("/logout", DB.auth.verify, DB.auth.logout);
+router.post("/checkAdmin", DB.auth.verify, DB.auth.checkAdmin);
 
 // event endpoints
 

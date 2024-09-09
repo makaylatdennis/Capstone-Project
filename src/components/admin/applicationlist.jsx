@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import './applicationlist.css';
+import "./applicationlist.css";
 
 const UpdatePopup = ({ application, onUpdate, onCancel }) => {
   const LabelInput = ({ label, name, defaultValue }) => {
@@ -122,7 +122,9 @@ const ApplicationList = () => {
     }
   };
 
-  useEffect(() => getApplications(), []);
+  useEffect(() => {
+    getApplications();
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -180,39 +182,39 @@ const ApplicationList = () => {
           />
         )}
         <div className="button-container">
-        <button onClick={getApplications}>Refresh</button>
-        <button
-          onClick={() => {
-            setGetBy("pending");
-            getApplications();
-          }}
-        >
-          getPending
-        </button>
-        <button
-          onClick={() => {
-            setGetBy("approved");
-            getApplications();
-          }}
-        >
-          getApproved
-        </button>
-        <button
-          onClick={() => {
-            setGetBy("rejected");
-            getApplications();
-          }}
-        >
-          getRejected
-        </button>
-        <button
-          onClick={() => {
-            setGetBy("");
-            getApplications();
-          }}
-        >
-          getAll
-        </button>
+          <button onClick={getApplications}>Refresh</button>
+          <button
+            onClick={() => {
+              setGetBy("pending");
+              getApplications();
+            }}
+          >
+            getPending
+          </button>
+          <button
+            onClick={() => {
+              setGetBy("approved");
+              getApplications();
+            }}
+          >
+            getApproved
+          </button>
+          <button
+            onClick={() => {
+              setGetBy("rejected");
+              getApplications();
+            }}
+          >
+            getRejected
+          </button>
+          <button
+            onClick={() => {
+              setGetBy("");
+              getApplications();
+            }}
+          >
+            getAll
+          </button>
         </div>
         <ul>
           {applications.map((application) => (

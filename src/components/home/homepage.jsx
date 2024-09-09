@@ -117,6 +117,46 @@ function Homepage() {
                 </div>
             </div>
 
+            <h1 className="team-title">Meet The Team</h1>
+
+            <div className="carousel-container">
+                <div className="carousel-track">
+                    <div className="carousel-item">
+                        <img src="/me.jpeg" alt="Makayla Dennis" className="team-image" />
+                        <h3 className="team-name">Makayla Dennis</h3>
+                    </div>
+                    <div className="carousel-item">
+                        <img src="/Sera Senwosret-Ward Headshot (1) 2.png" alt="Sera Ward" className="team-image" />
+                        <h3 className="team-name">Sera Ward</h3>
+                    </div>
+                    <div className="carousel-item">
+                        <img src="/Josh Drakeford Headshot.JPG" alt="Josh Drakeford" className="team-image" />
+                        <h3 className="team-name">Josh Drakeford</h3>
+                    </div>
+                    <div className="carousel-item">
+                        <img src="/Jorge Esparza Headshot.JPG" alt="Jorge Axel Esparza" className="team-image" />
+                        <h3 className="team-name">Jorge Axel Esparza</h3>
+                    </div>
+                    <div className="carousel-item">
+                        <img src="/me.jpeg" alt="Makayla Dennis" className="team-image" />
+                        <h3 className="team-name">Makayla Dennis</h3>
+                    </div>
+                    <div className="carousel-item">
+                        <img src="/Sera Senwosret-Ward Headshot (1) 2.png" alt="Sera Ward" className="team-image" />
+                        <h3 className="team-name">Sera Ward</h3>
+                    </div>
+                    <div className="carousel-item">
+                        <img src="/Josh Drakeford Headshot.JPG" alt="Josh Drakeford" className="team-image" />
+                        <h3 className="team-name">Josh Drakeford</h3>
+                    </div>
+                    <div className="carousel-item">
+                        <img src="/Jorge Esparza Headshot.JPG" alt="Jorge Axel Esparza" className="team-image" />
+                        <h3 className="team-name">Jorge Axel Esparza</h3>
+                    </div>
+                </div>
+            </div>
+
+
             <div className="contact-section">
                 <h1>Contact Us</h1>
                 <p>We’d love to connect with you! If you have questions about our services, need assistance with your outdoor projects, or simply want to learn more about what we do, feel free to reach out. Our team is here to provide the support and information you need. Don’t hesitate to contact us for any inquiries or to share your feedback.</p>
@@ -124,12 +164,6 @@ function Homepage() {
                     <p><strong>Email:</strong> support@greenbeginnings.com</p>
                     <p><strong>Phone:</strong> (704) 123-4567</p>
                 </div>
-                <form className="contact-form">
-                    <input type="text" placeholder="Your Name" required />
-                    <input type="email" placeholder="Your Email" required />
-                    <textarea placeholder="Your Message" required></textarea>
-                    <button type="submit">Send Message</button>
-                </form>
             </div>
         </section>
     );
