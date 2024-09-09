@@ -124,7 +124,7 @@ const VolunteerList = () => {
             onCancel={() => setShowDeletePopup(false)}
           />
         )}
-        <button onClick={getVolunteers}>Refresh</button>
+        <button onClick={getVolunteers} className="refresh">Refresh</button>
         <ul>
           {volunteers.map((volunteer) => (
             <li key={volunteer.id}>
