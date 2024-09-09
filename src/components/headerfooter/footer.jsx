@@ -42,7 +42,6 @@ function Footer() {
                             <li><p>Sign In</p></li>
                         </ul>
                     </div>
-
                     <div className="footer-col" id="footer2">
                         <h4>Customer Service</h4>
                         <ul>
