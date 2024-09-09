@@ -424,9 +424,9 @@ module.exports = {
       });
     },
     create: (req, res) => {
-      const { name, userID, date, time, description } = req.body;
+      const { name, userID, date, time, description, status } = req.body;
 
-      if (!name || !date || !time || !description) {
+      if (!name || !date || !time || !description || !status) {
         res.status(400).json({ message: "Missing fields" });
         return;
       }
@@ -434,7 +434,7 @@ module.exports = {
       const queryPromise = callQuery(
         `INSERT INTO events (name, userID, date, time, description, status) VALUES ("${name}", ${
           !userID ? "null" : userID
-        }, '${date}', '${time}', "${description}", "approved")`
+        }, '${date}', '${time}', "${description}", "${status}")`
       );
       queryPromise.then((results) => {
         res.status(200).send(results);
@@ -583,24 +583,19 @@ module.exports = {
         status,
       } = req.body;
 
-      if (
-        !firstName ||
-        !lastName ||
-        !email ||
-        !address ||
-        !zip ||
-        !city ||
-        !state ||
-        !phone ||
-        !eventID ||
-        !status
-      ) {
+      if (!firstName || !lastName || !email || !phone) {
         res.status(400).json({ message: "Missing fields" });
         return;
       }
 
       const queryPromise = callQuery(
-        `UPDATE applications SET firstName = "${firstName}", lastName = "${lastName}", email = "${email}", address = "${address}", zip = "${zip}", city = "${city}", state = "${state}", phone = "${phone}", eventID = ${eventID}, status = "${status}" WHERE id = ${id}`
+        `UPDATE applications SET firstName = "${firstName}", lastName = "${lastName}", email = "${email}", address = "${address}", zip = "${
+          zip || "null"
+        }", city = "${city || "null"}", state = "${
+          state || "null"
+        }", phone = "${phone}", eventID = ${eventID || "null"}, status = "${
+          status || "null"
+        }" WHERE id = ${id}`
       );
 
       queryPromise.then((results) => {
@@ -631,22 +626,17 @@ module.exports = {
       const { firstName, lastName, email, phone, address, zip, city, state } =
         req.body;
 
-      if (
-        !firstName ||
-        !lastName ||
-        !email ||
-        !phone ||
-        !address ||
-        !zip ||
-        !city ||
-        !state
-      ) {
+      if (!firstName || !lastName || !email || !phone) {
         res.status(400).json({ message: "Missing fields" });
         return;
       }
 
       const queryPromise = callQuery(
-        `INSERT INTO applications (firstName, lastName, email, address, zip, city, state, phone, eventID, status) VALUES ("${firstName}", "${lastName}", "${email}", "${address}", "${zip}", "${city}", "${state}", "${phone}", "pending")`
+        `INSERT INTO applications (firstName, lastName, email, address, zip, city, state, phone, eventID, status) VALUES ("${firstName}", "${lastName}", "${email}", ${
+          !address ? "null" : `"${address}"`
+        }, ${!zip ? "null" : `"${zip}"`}, ${!city ? null : `"${city}"`}, ${
+          !state ? "null" : `"${state}"`
+        }, "${phone}", null, "pending")`
       );
 
       queryPromise.then((results) => {
