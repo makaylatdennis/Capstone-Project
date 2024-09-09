@@ -8,7 +8,6 @@ function Application() {
     <div className='service-app'>
       <div id="firsthalf">
         <div id='app-logo'>
-          <img src="logo.png" alt="Green Beginnings Logo" />
         </div>
         <h1 id='service-heading'>What We're Doing at Green Beginnings</h1>
         <div id='app-info'>
