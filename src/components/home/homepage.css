@@ -224,6 +224,7 @@
     transition: transform 0.3s ease-in-out;
     width: 75%;
     margin: 0 auto;
+    margin-top: 5%;
 }
 
 .contact-section:hover {
