@@ -89,7 +89,9 @@ const VolunteerList = () => {
     }
   };
 
-  useEffect(() => getVolunteers(), []);
+  useEffect(() => {
+    getVolunteers();
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -124,7 +126,9 @@ const VolunteerList = () => {
             onCancel={() => setShowDeletePopup(false)}
           />
         )}
-        <button onClick={getVolunteers} className="refresh">Refresh</button>
+        <button onClick={getVolunteers} className="refresh">
+          Refresh
+        </button>
         <ul>
           {volunteers.map((volunteer) => (
             <li key={volunteer.id}>

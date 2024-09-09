@@ -89,7 +89,9 @@ const ContactList = () => {
     }
   };
 
-  useEffect(() => getContacts(), []);
+  useEffect(() => {
+    getContacts();
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -124,7 +126,9 @@ const ContactList = () => {
             onCancel={() => setShowDeletePopup(false)}
           />
         )}
-        <button onClick={getContacts} className="resfresh">Refresh</button>
+        <button onClick={getContacts} className="resfresh">
+          Refresh
+        </button>
         <ul>
           {contacts.map((contact) => (
             <li key={contact.id}>
